@@ -1,19 +1,19 @@
 import React from 'react';
+import { Route, Switch } from 'react-router';
 import './App.css';
-import { Switch, Route } from 'react-router';
-import { Link } from 'react-router-dom';
+import NavBar from './Pages/NavBar/NavBar';
+import Register from './Pages/Register/Register';
 
 const App: React.FC = () => {
   return (
     <div className="App">
-      <Link to="/example1">example 1</Link>
-      <Link to="/example2">example 2</Link>
+      <NavBar />
       <Switch>
         <Route path="/" exact>
           <div>homepage</div>
         </Route>
-        <Route path="/example1">
-          <div>example1</div>
+        <Route path="/register">
+          <Register />
         </Route>
         <Route path="/example2">
           <div>example2</div>
