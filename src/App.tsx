@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router';
 import './App.css';
 import NavBar from './Pages/NavBar/NavBar';
-import Register from './Pages/Register/Register';
+import {Register} from './Pages/Register/Register';
 
 const App: React.FC = () => {
   return (
