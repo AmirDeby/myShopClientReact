@@ -1,6 +1,6 @@
 export interface IState {
     isLogged: boolean,
-    errorMessage:string,
+    errorMessage: string,
 }
 
 export interface IAction {
@@ -12,12 +12,14 @@ export interface IAction {
 
 const initialState: IState = {
     isLogged: false,
-    errorMessage:""
+    errorMessage: "",
 };
 
 export enum ActionType {
     RegisterFail = "REGISTER_FAIL",
     RegisterSuccess = "REGISTER_SUCCESS",
+    LoginFail = "LOGIN_FAIL",
+    LoginSuccess = "LOGIN_SUCCESS"
 }
 
 export const reducer = (state = initialState, action: IAction) => {
@@ -26,15 +28,27 @@ export const reducer = (state = initialState, action: IAction) => {
         case ActionType.RegisterSuccess: {
             return {
                 ...state,
-                isLogged:true,
+                isLogged: true,
+            }
+        }
+        case ActionType.LoginSuccess: {
+            return {
+                ...state,
+                isLogged: true,
+            }
+        }
+        case ActionType.LoginFail: {
+            return {
+                ...state,
+                errorMessage: action.payload,
             }
         }
         case ActionType.RegisterFail: {
             return {
                 ...state,
-                errorMessage:action.payload,
+                errorMessage: action.payload,
             }
-            }
+        }
 
         default: {
             return state;

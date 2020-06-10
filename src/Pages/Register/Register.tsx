@@ -1,20 +1,20 @@
-import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import * as React from 'react';
-import '../Register/Register.css';
 import { connect } from 'react-redux';
-import { IState } from '../../Redux/reducer';
 import { registerAction } from '../../Redux/action';
+import { IState } from '../../Redux/reducer';
+import '../Register/Register.css';
+import { Redirect } from 'react-router';
 
 export interface IRegisterProps {
     register(firstName: string, lastName: string, email: string, password: string): void,
     error: boolean,
+    isLogged: boolean,
 }
 
 interface IRegisterState {
@@ -33,7 +33,10 @@ class _Register extends React.Component<IRegisterProps, IRegisterState> {
     }
     public render() {
         const isFilled = this.canBeRegister();
-        const { error } = this.props
+        const { error, isLogged } = this.props;
+        if (isLogged) {
+            return <Redirect to="/products" />
+        }
         return (
             <div className="register-main-div">
                 <div>
@@ -137,6 +140,7 @@ class _Register extends React.Component<IRegisterProps, IRegisterState> {
 const mapStateToProps = (state: IState) => {
     return {
         error: state.errorMessage !== "",
+        isLogged: state.isLogged,
     }
 }
 const mapDispatchToProps = {
