@@ -2,6 +2,18 @@ import axios from 'axios';
 import { Dispatch } from 'react';
 import { IAction, ActionType } from './reducer';
 
+export const getProductsAction = () => {
+    return async (dispatch: Dispatch<IAction>) => {
+        const token = localStorage.getItem('token');
+        const result = await axios.get('http://localhost:5000/products',
+            { headers: { Authorization: `Bearer ${token}` } });
+        dispatch({
+            type: ActionType.GetProducts,
+            payload: result.data
+        })
+    }
+}
+
 export const loginAction = (email: string, password: string) => {
     return async (dispatch: Dispatch<IAction>) => {
         try {
@@ -41,6 +53,13 @@ export const registerAction = (firstName: string, lastName: string, email: strin
                 payload: e.message
             })
         }
+    }
+}
+
+export const resetErrorMessageAction = () => {
+    return {
+        type: ActionType.ResetErrorMessage,
+        payload: {}
     }
 }
 

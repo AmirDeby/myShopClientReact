@@ -1,9 +1,10 @@
 import React from 'react';
 import { Route, Switch } from 'react-router';
 import './App.css';
-import { Register } from './Pages/Register/Register';
-import NavBar from './Componenets/NavBar/NavBar/NavBar';
+import { NavBar } from './Componenets/NavBar/NavBar/NavBar';
 import { Login } from './Pages/Login/Login';
+import { ProductsPage } from './Pages/ProductsPage/ProductsPage';
+import { Register } from './Pages/Register/Register';
 
 const App: React.FC = () => {
   return (
@@ -20,7 +21,7 @@ const App: React.FC = () => {
           <Login />
         </Route>
         <Route path="/products">
-          <h1> Products</h1>
+          <ProductsPage />
         </Route>
         <Route>
           page not found

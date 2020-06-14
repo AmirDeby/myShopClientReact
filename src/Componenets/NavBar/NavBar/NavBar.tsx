@@ -5,19 +5,23 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import FormControl from 'react-bootstrap/FormControl';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { IState } from '../../../Redux/reducer';
 
 export interface INavBarProps {
+    isLogged: boolean,
 }
 
-export default class NavBar extends React.Component<INavBarProps> {
+class _NavBar extends React.Component<INavBarProps> {
     public render() {
+        const { isLogged } = this.props;
         return (
             <Navbar style={{ backgroundColor: "rgba(0, 0, 0, 0.726)" }} variant="dark">
                 <Navbar.Brand>WhiskyShop</Navbar.Brand>
                 <Nav className="mr-auto">
-                    <Nav.Link as="span"><Link to="/register">Register</Link></Nav.Link>
-                    <Nav.Link as="span"><Link to="/login">Login</Link></Nav.Link>
-                    <Nav.Link as="span">Products</Nav.Link>
+                    {isLogged ? null : <Nav.Link as="span"><Link to="/register">Register</Link></Nav.Link>}
+                    {isLogged ? null  : <Nav.Link as="span"><Link to="/login">Login</Link></Nav.Link>}
+                    {isLogged ? <Nav.Link as="span"><Link to="/products">Products</Link></Nav.Link> : null}
                 </Nav>
                 <Form inline>
                     <FormControl type="text" placeholder="Search" className="mr-sm-2" />
@@ -27,3 +31,17 @@ export default class NavBar extends React.Component<INavBarProps> {
         );
     }
 }
+
+const mapStateToProps = (state: IState) => {
+    return {
+        isLogged: state.isLogged,
+    }
+}
+const mapDispatchToProps = {
+
+}
+
+export const NavBar = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(_NavBar);

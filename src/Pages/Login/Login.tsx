@@ -8,7 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { loginAction } from '../../Redux/action';
+import { loginAction, resetErrorMessageAction } from '../../Redux/action';
 import { IState } from '../../Redux/reducer';
 import { Redirect } from 'react-router';
 import '../Login/Login.css';
@@ -17,7 +17,8 @@ import '../Login/Login.css';
 export interface ILoginProps {
     isLogged: boolean,
     login(email: string, password: string): void,
-    erorr: boolean,
+    error: boolean,
+    resetError(): void,
 }
 interface ILoginState {
     email: string,
@@ -29,9 +30,13 @@ class _Login extends React.Component<ILoginProps, ILoginState> {
         email: "",
         password: "",
     }
+    componentWillUnmount() {
+        const { resetError } = this.props;
+        resetError();
+    }
     public render() {
         const { password, email } = this.state;
-        const { erorr, isLogged } = this.props;
+        const { error, isLogged } = this.props;
         const isFilled = this.canBeClicked();
         if (isLogged) {
             return <Redirect to="/products" />
@@ -68,7 +73,7 @@ class _Login extends React.Component<ILoginProps, ILoginState> {
                             type="password"
                             autoComplete="current-password"
                         />
-                        <span style={{ color: "red" }} className={["erorr-login", erorr ? 'visible' : 'invisible'].join(' ') }>*Email or Password is not valid</span>
+                        <span style={{ color: "red" }} className={["erorr-login", error ? 'visible' : 'invisible'].join(' ') }>*Email or Password is not valid</span>
                         <Button
                             type="submit"
                             fullWidth
@@ -120,12 +125,13 @@ class _Login extends React.Component<ILoginProps, ILoginState> {
 const mapStateToProps = (state: IState) => {
     return {
         isLogged: state.isLogged,
-        erorr: state.errorMessage !== ""
+        error: state.errorMessage !== "",
     }
 }
 
 const mapDispatchToProps = {
     login: loginAction,
+    resetError:resetErrorMessageAction,
 }
 export const Login = connect(
     mapStateToProps,

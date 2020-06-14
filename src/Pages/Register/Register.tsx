@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { registerAction } from '../../Redux/action';
+import { registerAction, resetErrorMessageAction } from '../../Redux/action';
 import { IState } from '../../Redux/reducer';
 import '../Register/Register.css';
 import { Redirect } from 'react-router';
@@ -15,6 +15,7 @@ export interface IRegisterProps {
     register(firstName: string, lastName: string, email: string, password: string): void,
     error: boolean,
     isLogged: boolean,
+    reserErrorMessage(): void,
 }
 
 interface IRegisterState {
@@ -30,6 +31,10 @@ class _Register extends React.Component<IRegisterProps, IRegisterState> {
         lastName: "",
         email: "",
         password: "",
+    }
+    componentWillUnmount() {
+        const { reserErrorMessage } = this.props;
+        reserErrorMessage();
     }
     public render() {
         const isFilled = this.canBeRegister();
@@ -145,6 +150,7 @@ const mapStateToProps = (state: IState) => {
 }
 const mapDispatchToProps = {
     register: registerAction,
+    reserErrorMessage: resetErrorMessageAction,
 }
 
 export const Register = connect(
