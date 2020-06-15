@@ -8,17 +8,21 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+import { connect } from 'react-redux';
+import { IState } from '../../Redux/reducer';
+import { insertItemToCartAction } from '../../Redux/action';
 
 export interface IProductsProps {
-    id?:number,
+    id?: number,
     name?: string,
     description?: string,
     image?: string,
     originalPrice?: number,
     salePrice?: number,
+    insterItem?(id: number, quantity: number): void,
 }
 
-export default class Product extends React.Component<IProductsProps> {
+class _Product extends React.Component<IProductsProps> {
 
     public render() {
         const { name, description, image, originalPrice, salePrice } = this.props
@@ -44,21 +48,34 @@ export default class Product extends React.Component<IProductsProps> {
                 </CardActionArea>
                 <CardActions>
                     <Button size="small" variant="outlined" color="primary">
-                       Original Price :  {originalPrice}
+                        Original Price :  {originalPrice}
                     </Button>
                     <Button size="small" variant="outlined" color="primary">
                         Sale : {salePrice}
                     </Button>
-                    <IconButton onClick={() => { this.justCheck() }} color="primary" aria-label="add to shopping cart">
+                    <IconButton onClick={this.addItemToCart} color="primary" aria-label="add to shopping cart">
                         <AddShoppingCartIcon />
                     </IconButton>
                 </CardActions>
             </Card>
         );
     }
-    justCheck = () => {
-        const { id} = this.props;
-        console.log(id);
-        
+    addItemToCart = () => {
+        const { id, insterItem } = this.props;
+        insterItem(id,1);
     }
 }
+
+const mapStateToProps = (state: IState) => {
+    return {
+
+    }
+}
+const mapDispatchToProps = {
+    insterItem: insertItemToCartAction,
+}
+
+export const Product = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(_Product);

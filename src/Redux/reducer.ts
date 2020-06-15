@@ -26,10 +26,24 @@ export enum ActionType {
     LoginSuccess = "LOGIN_SUCCESS",
     ResetErrorMessage = "RESET_ERROR_MESSAGE",
     GetProducts = "GET_PRODUCTS",
+    GetUserCart = "GET_USER_CART",
+    InsertItemToCart = "INSERT_ITEM_TO_CART",
 }
 
 export const reducer = (state = initialState, action: IAction) => {
     switch (action.type) {
+
+        case ActionType.InsertItemToCart: {
+            return {
+                ...state,
+            }
+        }
+
+        case ActionType.GetUserCart: {
+            return {
+                ...state,
+            }
+        }
 
         case ActionType.GetProducts: {
             return {

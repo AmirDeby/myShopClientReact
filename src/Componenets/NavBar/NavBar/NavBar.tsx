@@ -40,7 +40,6 @@ const mapStateToProps = (state: IState) => {
 const mapDispatchToProps = {
 
 }
-
 export const NavBar = connect(
     mapStateToProps,
     mapDispatchToProps

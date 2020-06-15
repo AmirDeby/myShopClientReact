@@ -4,7 +4,8 @@ import { IState } from '../../Redux/reducer';
 import { getProductsAction } from '../../Redux/action';
 import { Redirect } from 'react-router';
 import { IProduct } from '../../Models/Product';
-import Product from '../../Componenets/NavBar/Product/Product';
+import { Product } from '../../Componenets/Product/Product';
+
 
 export interface IProductsPageProps {
     getProducts(): void,
@@ -24,7 +25,7 @@ class _ProductsPage extends React.Component<IProductsPageProps> {
         }
         return (
             <div className="row">
-                {products.map((product) => 
+                {products.map((product) =>
                     <div key={product.name}>
                         <Product {...product} />
                     </div>
