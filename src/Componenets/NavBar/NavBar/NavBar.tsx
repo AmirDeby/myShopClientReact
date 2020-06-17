@@ -7,6 +7,7 @@ import FormControl from 'react-bootstrap/FormControl';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { IState } from '../../../Redux/reducer';
+import { CartIcon } from '../../CartIcon/CartIcon';
 
 export interface INavBarProps {
     isLogged: boolean,
@@ -20,11 +21,12 @@ class _NavBar extends React.Component<INavBarProps> {
                 <Navbar.Brand>WhiskyShop</Navbar.Brand>
                 <Nav className="mr-auto">
                     {isLogged ? null : <Nav.Link as="span"><Link to="/register">Register</Link></Nav.Link>}
-                    {isLogged ? null  : <Nav.Link as="span"><Link to="/login">Login</Link></Nav.Link>}
+                    {isLogged ? null : <Nav.Link as="span"><Link to="/login">Login</Link></Nav.Link>}
                     {isLogged ? <Nav.Link as="span"><Link to="/products">Products</Link></Nav.Link> : null}
                 </Nav>
                 <Form inline>
-                    <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+                    {isLogged ? <Nav.Link as="span"><Link to="/cart"><CartIcon /></Link></Nav.Link> : null}
+                    <FormControl style={{ marginLeft: "17px" }} type="text" placeholder="Search" className="mr-sm-2" />
                     <Button variant="outline-light" size="sm">Search</Button>
                 </Form>
             </Navbar>

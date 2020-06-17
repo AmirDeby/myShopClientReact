@@ -10,13 +10,23 @@ import { registerAction, resetErrorMessageAction } from '../../Redux/action';
 import { IState } from '../../Redux/reducer';
 import '../Register/Register.css';
 import { Redirect } from 'react-router';
+import { withStyles, StyledComponentProps, Theme } from '@material-ui/core';
 
-export interface IRegisterProps {
+export interface IRegisterProps extends StyledComponentProps {
     register(firstName: string, lastName: string, email: string, password: string): void,
     error: boolean,
     isLogged: boolean,
     reserErrorMessage(): void,
 }
+const styles = (theme: Theme) => ({
+    form: {
+        width: '100%', // Fix IE 11 issue.
+        marginTop: theme.spacing(3),
+    },
+    submit: {
+        margin: theme.spacing(3, 0, 2),
+    },
+})
 
 interface IRegisterState {
     firstName: string,
@@ -38,14 +48,14 @@ class _Register extends React.Component<IRegisterProps, IRegisterState> {
     }
     public render() {
         const isFilled = this.canBeRegister();
-        const { error, isLogged } = this.props;
+        const { error, isLogged, classes } = this.props;
         if (isLogged) {
             return <Redirect to="/products" />
         }
         return (
             <div className="register-main-div">
                 <div>
-                    <form noValidate onSubmit={this.onSubmit}>
+                    <form className={classes.form} noValidate onSubmit={this.onSubmit}>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>
                                 <TextField
@@ -110,6 +120,7 @@ class _Register extends React.Component<IRegisterProps, IRegisterState> {
                             fullWidth
                             variant="contained"
                             color="primary"
+                            className={classes.submit}
                         >
                             Sign Up
                         </Button>
@@ -156,4 +167,4 @@ const mapDispatchToProps = {
 export const Register = connect(
     mapStateToProps,
     mapDispatchToProps
-)(_Register)
+)(withStyles(styles)(_Register));

@@ -2,6 +2,19 @@ import axios from 'axios';
 import { Dispatch } from 'react';
 import { IAction, ActionType } from './reducer';
 
+export const getUserCartAction = () => {
+    return async (dispatch: Dispatch<IAction>) => {
+        const token = localStorage.getItem('token');
+        const result = await axios.get('http://localhost:5000/cart',
+            { headers: { Authorization: `Bearer ${token}` } });
+        console.log(result.data);
+        dispatch({
+            type: ActionType.GetUserCart,
+            payload: result.data
+        })
+    }
+}
+
 export const insertItemToCartAction = (id: number, quantity: number) => {
     return async (dispatch: Dispatch<IAction>) => {
         const token = localStorage.getItem('token');
@@ -18,11 +31,11 @@ export const insertItemToCartAction = (id: number, quantity: number) => {
 export const getProductsAction = () => {
     return async (dispatch: Dispatch<IAction>) => {
         const token = localStorage.getItem('token');
-        const result = await axios.get('http://localhost:5000/products',
+        const { data: products } = await axios.get('http://localhost:5000/products',
             { headers: { Authorization: `Bearer ${token}` } });
         dispatch({
             type: ActionType.GetProducts,
-            payload: result.data
+            payload: { products }
         })
     }
 }
@@ -42,7 +55,7 @@ export const loginAction = (email: string, password: string) => {
         catch (e) {
             dispatch({
                 type: ActionType.LoginFail,
-                payload: e.message
+                payload: { msg: e.message }
             })
         }
     }
@@ -51,9 +64,8 @@ export const loginAction = (email: string, password: string) => {
 export const registerAction = (firstName: string, lastName: string, email: string, password: string) => {
     return async (dispatch: Dispatch<IAction>) => {
         try {
-            const response = await axios.post('http://localhost:5000/users/register',
+            const { data: { token } } = await axios.post('http://localhost:5000/users/register',
                 { firstName, lastName, email, password });
-            const token = response.data.token;
             localStorage.setItem('token', token)
             dispatch({
                 type: ActionType.RegisterSuccess,
@@ -63,7 +75,7 @@ export const registerAction = (firstName: string, lastName: string, email: strin
         catch (e) {
             dispatch({
                 type: ActionType.RegisterFail,
-                payload: e.message
+                payload: { msg: e.message }
             })
         }
     }

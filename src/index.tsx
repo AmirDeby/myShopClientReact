@@ -1,16 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
-import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-import { reducer } from './Redux/reducer';
-import { createLogger } from 'redux-logger';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { CssBaseline } from '@material-ui/core';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { applyMiddleware, createStore } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import { createLogger } from 'redux-logger';
+import thunk from 'redux-thunk';
+import { App } from './App';
+import './index.css';
+import { reducer } from './Redux/reducer';
+import * as serviceWorker from './serviceWorker';
 
 const logger = createLogger({ collapsed: true });
 const middleware = [thunk, logger];
@@ -18,12 +19,15 @@ const middleware = [thunk, logger];
 const store = createStore(reducer, composeWithDevTools(
     applyMiddleware(...middleware),
     // other store enhancers if any
-));
+    ));
+    
 
 ReactDOM.render(
     <BrowserRouter>
         <Provider store={store}>
-            <App />
+            <CssBaseline>
+                <App />
+            </CssBaseline>
         </Provider>
     </BrowserRouter>
     , document.getElementById('root'));

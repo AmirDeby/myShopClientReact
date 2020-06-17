@@ -26,7 +26,7 @@ class _ProductsPage extends React.Component<IProductsPageProps> {
         return (
             <div className="row">
                 {products.map((product) =>
-                    <div key={product.name}>
+                    <div key={product.id}>
                         <Product {...product} />
                     </div>
                 )}

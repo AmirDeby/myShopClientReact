@@ -1,14 +1,16 @@
 import { IProduct } from "../Models/Product";
+import { ICart } from "../Models/cart";
 
 export interface IState {
     isLogged: boolean,
     errorMessage: string,
     products: IProduct[],
+    userCart: any,
 }
 
 export interface IAction {
     type: string;
-    payload: any;
+    payload: Record<string, any>;
 
 }
 
@@ -17,6 +19,7 @@ const initialState: IState = {
     isLogged: false,
     errorMessage: "",
     products: [],
+    userCart: [],
 };
 
 export enum ActionType {
@@ -30,25 +33,26 @@ export enum ActionType {
     InsertItemToCart = "INSERT_ITEM_TO_CART",
 }
 
-export const reducer = (state = initialState, action: IAction) => {
+export const reducer = (state: IState = initialState, action: IAction): IState => {
     switch (action.type) {
 
+        case ActionType.GetUserCart: {
+            const userCart = action.payload;
+            return {
+                ...state,
+                userCart
+            }
+        }
         case ActionType.InsertItemToCart: {
             return {
                 ...state,
             }
         }
-
-        case ActionType.GetUserCart: {
-            return {
-                ...state,
-            }
-        }
-
         case ActionType.GetProducts: {
+            const { products } = action.payload;
             return {
                 ...state,
-                products: action.payload
+                products,
             }
         }
         case ActionType.RegisterSuccess: {
@@ -64,15 +68,17 @@ export const reducer = (state = initialState, action: IAction) => {
             }
         }
         case ActionType.LoginFail: {
+            const { msg } = action.payload;
             return {
                 ...state,
-                errorMessage: action.payload,
+                errorMessage: msg,
             }
         }
         case ActionType.RegisterFail: {
+            const { msg } = action.payload;
             return {
                 ...state,
-                errorMessage: action.payload,
+                errorMessage: msg,
             }
         }
         case ActionType.ResetErrorMessage: {
