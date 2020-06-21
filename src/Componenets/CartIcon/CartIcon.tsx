@@ -6,6 +6,7 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { connect } from 'react-redux';
 import { IState } from '../../Redux/reducer';
 import { ICartItem } from '../../Models/cart';
+import sumBy from 'lodash.sumby';
 
 export interface ICartIconProps extends StyledComponentProps {
     userCart: ICartItem[],
@@ -24,10 +25,11 @@ const styles = (theme: Theme) => ({
 
 class _CartIcon extends React.Component<ICartIconProps> {
     public render() {
-        const { classes,userCart } = this.props;
+        const { classes, userCart } = this.props;
+        const numberOfItemInCart = sumBy(userCart, 'quantity');
         return (
             <IconButton aria-label="Cart">
-                <Badge badgeContent={userCart.length} color="primary" classes={{ badge: classes.badge }}>
+                <Badge badgeContent={numberOfItemInCart} color="primary" classes={{ badge: classes.badge }}>
                     <ShoppingCartIcon />
                 </Badge>
             </IconButton>

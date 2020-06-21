@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import React from 'react';
 import { connect } from 'react-redux';
-import { getUserCartAction, insertItemToCartAction } from '../../Redux/action';
+import { insertItemToCartAction } from '../../Redux/action';
 import { IState } from '../../Redux/reducer';
 
 export interface IProductsProps extends StyledComponentProps {
@@ -23,8 +23,8 @@ export interface IProductsProps extends StyledComponentProps {
     salePrice?: number,
     insertItem?(id: number, quantity: number): void,
     insertError: boolean,
-    userCart(): void,
 }
+
 interface IProductsState {
     quantity: number,
 }
@@ -47,10 +47,6 @@ const styles = (theme: Theme) => ({
 class _Product extends React.Component<IProductsProps> {
     state: IProductsState = {
         quantity: 1,
-    }
-    componentDidMount() {
-        const { userCart } = this.props;
-        userCart();
     }
     public render() {
         const { classes, name, description, image, originalPrice, salePrice, insertError } = this.props;
@@ -122,7 +118,6 @@ const mapStateToProps = (state: IState) => {
 }
 const mapDispatchToProps = {
     insertItem: insertItemToCartAction,
-    userCart: getUserCartAction,
 }
 
 export const Product = connect(

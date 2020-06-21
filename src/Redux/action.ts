@@ -2,6 +2,18 @@ import axios from 'axios';
 import { Dispatch } from 'react';
 import { IAction, ActionType } from './reducer';
 
+export const searchProductAction = (keyword: string) => {
+    return async (dispatch: Dispatch<IAction>) => {
+        const token = localStorage.getItem('token');
+        const result = await axios.post('http://localhost:5000/products/search', { keyword },
+            { headers: { Authorization: `Bearer ${token}` } });
+        dispatch({
+            type: ActionType.SearchItem,
+            payload: { products: result.data },
+        })
+    }
+}
+
 export const getUserCartAction = () => {
     return async (dispatch: Dispatch<IAction>) => {
         const token = localStorage.getItem('token');

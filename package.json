@@ -7,6 +7,7 @@
     "@material-ui/icons": "^4.9.1",
     "@types/classnames": "^2.2.10",
     "@types/jest": "24.0.19",
+    "@types/lodash.sumby": "^4.6.6",
     "@types/node": "12.7.12",
     "@types/react": "16.9.6",
     "@types/react-dom": "16.9.2",

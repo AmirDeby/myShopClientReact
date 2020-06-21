@@ -37,11 +37,20 @@ export enum ActionType {
     InsertItemToCart = "INSERT_ITEM_TO_CART",
     InsertItemError = "INSERT_ITEM_ERROR",
     DeleteItemFromCart = "DELETE_ITEM_FROM_CART",
+    SearchItem = "SEARCH_ITEM",
 }
 
 export const reducer = (state: IState = initialState, action: IAction): IState => {
     switch (action.type) {
 
+        case ActionType.SearchItem: {
+            const { products } = action.payload;
+            console.log(action.payload);
+            return {
+                ...state,
+                products
+            }
+        }
         case ActionType.DeleteItemFromCart: {
             const { id } = action.payload;
             const userCart = state.userCart.concat();
