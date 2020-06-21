@@ -1,13 +1,5 @@
-export interface ICart {
-    id:number,
-    inventory:number,
-    name:string,
-    description:string,
-    image:string,
-    originalPrice: string,
-    salePrice:string,
-    categoryId:number,
-    productId:number,
-    userId: number,
+import { IProduct } from "./Product";
+
+export interface ICartItem extends IProduct {
     quantity:number
 }

@@ -1,7 +1,6 @@
 import { StyledComponentProps, Theme, withStyles } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Chip from '@material-ui/core/Chip';
@@ -12,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import React from 'react';
 import { connect } from 'react-redux';
-import { insertItemToCartAction } from '../../Redux/action';
+import { getUserCartAction, insertItemToCartAction } from '../../Redux/action';
 import { IState } from '../../Redux/reducer';
 
 export interface IProductsProps extends StyledComponentProps {
@@ -23,6 +22,8 @@ export interface IProductsProps extends StyledComponentProps {
     originalPrice?: number,
     salePrice?: number,
     insertItem?(id: number, quantity: number): void,
+    insertError: boolean,
+    userCart(): void,
 }
 interface IProductsState {
     quantity: number,
@@ -30,12 +31,13 @@ interface IProductsState {
 
 const styles = (theme: Theme) => ({
     card: {
-        maxWidth: 350,
+        maxWidth: 353,
         margin: theme.spacing(1),
     },
     quantity: {
-        width: 130,
+        width: 140,
         marginLeft: 5,
+        marginTop: 5,
     },
     chip: {
         margin: 11,
@@ -44,11 +46,15 @@ const styles = (theme: Theme) => ({
 
 class _Product extends React.Component<IProductsProps> {
     state: IProductsState = {
-        quantity: null,
+        quantity: 1,
     }
-
+    componentDidMount() {
+        const { userCart } = this.props;
+        userCart();
+    }
     public render() {
-        const { classes, name, description, image, originalPrice, salePrice } = this.props
+        const { classes, name, description, image, originalPrice, salePrice, insertError } = this.props;
+        const { quantity } = this.state;
         return (
             <Card className={classes.card}>
                 <CardActionArea>
@@ -67,6 +73,8 @@ class _Product extends React.Component<IProductsProps> {
                         <Typography variant="body2" color="textSecondary" component="p">
                             {description}
                         </Typography>
+                        <span style={{ textDecoration: "line-through" }} >Original Price : ${originalPrice}</span>
+                        <Chip style={{ marginRight: "5px" }} label={`Sale : ${salePrice}`} className={classes.chip} color="secondary" />
                     </CardContent>
                 </CardActionArea>
                 <TextField
@@ -75,18 +83,21 @@ class _Product extends React.Component<IProductsProps> {
                     variant="outlined"
                     label="Enter Quantity"
                     type="number"
+                    inputProps={{
+                        min: 1,
+                    }}
+                    value={quantity}
                     onChange={this.onChangeQuantity}
                     InputProps={{
                         startAdornment: <InputAdornment position="start">Quantity</InputAdornment>,
                     }}
                 />
-                <CardActions>
-                    <IconButton onClick={this.addItemToCart} color="primary" aria-label="add to shopping cart">
-                        <Chip label={`Original Price : ${originalPrice}`} className={classes.chip} variant="outlined" />
-                        <Chip label={`Sale : ${salePrice}`} className={classes.chip} variant="outlined" />
-                        <AddShoppingCartIcon />
-                    </IconButton>
-                </CardActions>
+                <div style={{ marginTop: "8px" }}>
+                    <span style={{ color: "red" }} className={["erorr-insert", insertError ? 'visible' : 'invisible'].join(' ')}>*Quantity must be at least 1</span>
+                </div>
+                <IconButton onClick={this.addItemToCart} color="primary" aria-label="add to shopping cart">
+                    <AddShoppingCartIcon />
+                </IconButton>
             </Card>
         );
     }
@@ -101,17 +112,17 @@ class _Product extends React.Component<IProductsProps> {
         this.setState({
             [name]: parseInt(value)
         })
-        console.log(this.state);
     }
 }
 
 const mapStateToProps = (state: IState) => {
     return {
-
+        insertError: state.errorMessage !== "",
     }
 }
 const mapDispatchToProps = {
     insertItem: insertItemToCartAction,
+    userCart: getUserCartAction,
 }
 
 export const Product = connect(

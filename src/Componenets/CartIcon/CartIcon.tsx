@@ -5,9 +5,10 @@ import { withStyles, StyledComponentProps, Theme } from '@material-ui/core/style
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { connect } from 'react-redux';
 import { IState } from '../../Redux/reducer';
+import { ICartItem } from '../../Models/cart';
 
 export interface ICartIconProps extends StyledComponentProps {
-    userCart:[],
+    userCart: ICartItem[],
 }
 
 const styles = (theme: Theme) => ({

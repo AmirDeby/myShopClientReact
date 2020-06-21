@@ -7,24 +7,41 @@ export const getUserCartAction = () => {
         const token = localStorage.getItem('token');
         const result = await axios.get('http://localhost:5000/cart',
             { headers: { Authorization: `Bearer ${token}` } });
-        console.log(result.data);
         dispatch({
             type: ActionType.GetUserCart,
-            payload: result.data
+            payload: { userCart: result.data }
         })
     }
 }
 
-export const insertItemToCartAction = (id: number, quantity: number) => {
+export const deleteItemFromCartAction = (id: number) => {
     return async (dispatch: Dispatch<IAction>) => {
         const token = localStorage.getItem('token');
-        const result = await axios.post(`http://localhost:5000/cart/${id}`, { quantity },
+        await axios.delete(`http://localhost:5000/cart/${id}`,
             { headers: { Authorization: `Bearer ${token}` } });
-        console.log(result);
         dispatch({
-            type: ActionType.InsertItemToCart,
-            payload: {}
+            type: ActionType.DeleteItemFromCart,
+            payload: { id }
         })
+    }
+}
+export const insertItemToCartAction = (id: number, quantity: number) => {
+    return async (dispatch: Dispatch<IAction>) => {
+        try {
+            const token = localStorage.getItem('token');
+            await axios.post(`http://localhost:5000/cart/${id}`, { quantity },
+                { headers: { Authorization: `Bearer ${token}` } });
+            dispatch({
+                type: ActionType.InsertItemToCart,
+                payload: { id, quantity }
+            })
+        }
+        catch (e) {
+            dispatch({
+                type: ActionType.InsertItemError,
+                payload: { msg: e.message }
+            })
+        }
     }
 }
 

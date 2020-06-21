@@ -18,8 +18,8 @@ class _App extends React.Component<IAppProps> {
       <div className="App">
         <NavBar />
         <Switch>
-          <Route path="/home" exact>
-            <div>homepage</div>
+          <Route path="/" exact>
+            <h3>Welcome To my Whisky Shop</h3>
           </Route>
           <Route path="/register">
             <Register />
@@ -32,7 +32,7 @@ class _App extends React.Component<IAppProps> {
           </Route>
           <Route path="/cart">
             <h2>Shopping Cart</h2>
-           <ShoppingCart />
+            <ShoppingCart />
           </Route>
           <Route>
             page not found

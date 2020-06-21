@@ -5,23 +5,17 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Chip from '@material-ui/core/Chip';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import TextField from '@material-ui/core/TextField';
+import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import DeleteIcon from '@material-ui/icons/Delete';
 import React from 'react';
 import { connect } from 'react-redux';
 import { IState } from '../../Redux/reducer';
+import { deleteItemFromCartAction, getUserCartAction } from '../../Redux/action';
+import { ICartItem } from '../../Models/cart';
 
-export interface ICartProps extends StyledComponentProps {
-    id?: number,
-    name?: string,
-    description?: string,
-    image?: string,
-    originalPrice?: string,
-    salePrice?: string,
-    categoryId?: number,
-    productId?: number,
-    quantity?: number
+export interface ICartProps extends ICartItem, StyledComponentProps {
+    deleteItem(id: number): void,
 }
 
 const styles = (theme: Theme) => ({
@@ -38,9 +32,10 @@ const styles = (theme: Theme) => ({
     }
 });
 
-class _Cart extends React.Component<ICartProps> {
+class _CartItem extends React.Component<ICartProps> {
+
     public render() {
-        const { classes, quantity, description, image, name, salePrice, originalPrice } = this.props;
+        const { classes, quantity, image, name, salePrice, originalPrice } = this.props;
         return (
             <Card className={classes.card}>
                 <CardActionArea>
@@ -56,15 +51,23 @@ class _Cart extends React.Component<ICartProps> {
                         <Typography gutterBottom variant="h5" component="h2">
                             {name}
                         </Typography>
-                            <Chip label={`Qauntity : ${quantity}`} className={classes.chip} color="secondary" />
+                        <Chip label={`Qauntity : ${quantity}`} className={classes.chip} color="secondary" />
                     </CardContent>
                 </CardActionArea>
                 <CardActions>
-                    <Chip style={{ textDecoration:"line-through"}} label={`Original Price : ${originalPrice}`} className={classes.chip} color="secondary" variant="outlined" />
+                    <Chip style={{ textDecoration: "line-through" }} label={`Original Price : ${originalPrice}`} className={classes.chip} color="secondary" variant="outlined" />
                     <Chip label={`Sale : ${salePrice}`} className={classes.chip} color="secondary" variant="outlined" />
                 </CardActions>
+                <IconButton onClick={this.deleteItemFromCart} aria-label="delete">
+                    <DeleteIcon />
+                </IconButton>
             </Card>
         );
+    }
+    deleteItemFromCart = () => {
+        const { id, deleteItem } = this.props;
+
+        deleteItem(id);
     }
 }
 
@@ -74,9 +77,11 @@ const mapStateToProps = (state: IState) => {
     }
 }
 const mapDispatchToProps = {
+    deleteItem: deleteItemFromCartAction,
+    getUserCart: getUserCartAction,
 }
 
-export const Cart = connect(
+export const CartItem = connect(
     mapStateToProps,
     mapDispatchToProps,
-)(withStyles(styles)(_Cart));
+)(withStyles(styles)(_CartItem));

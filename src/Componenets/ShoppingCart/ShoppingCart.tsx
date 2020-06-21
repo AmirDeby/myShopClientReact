@@ -2,20 +2,20 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { IState } from '../../Redux/reducer';
 import { getUserCartAction } from '../../Redux/action';
-import { ICart } from '../../Models/cart';
-import { Cart } from '../Cart/Cart';
+import { ICartItem } from '../../Models/cart';
+import { CartItem } from '../CartItem/CartItem';
 import { Redirect } from 'react-router';
 
 export interface IShoppingCartProps {
     getCart(): void,
-    cart: ICart[],
+    cart: ICartItem[],
     isLogged: boolean,
 }
 
 class _ShoppingCart extends React.Component<IShoppingCartProps> {
     componentDidMount() {
-        const { getCart } = this.props
-        getCart()
+        const { getCart } = this.props;
+        getCart();
     }
     public render() {
         const { cart, isLogged } = this.props;
@@ -26,13 +26,14 @@ class _ShoppingCart extends React.Component<IShoppingCartProps> {
             <div className="row">
                 {cart.map((item) =>
                     <div key={item.id}>
-                        <Cart {...item} />
+                        <CartItem {...item} />
                     </div>
                 )}
             </div>
         );
     }
 }
+
 const mapStateToProps = (state: IState) => {
     return {
         cart: state.userCart,

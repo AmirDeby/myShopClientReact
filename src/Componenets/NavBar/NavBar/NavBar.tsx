@@ -17,7 +17,7 @@ class _NavBar extends React.Component<INavBarProps> {
     public render() {
         const { isLogged } = this.props;
         return (
-            <Navbar style={{ backgroundColor: "rgba(0, 0, 0, 0.726)" }} variant="dark">
+            <Navbar style={{ backgroundColor: "rgba(255, 235, 205, 0.651)" }}>
                 <Navbar.Brand>WhiskyShop</Navbar.Brand>
                 <Nav className="mr-auto">
                     {isLogged ? null : <Nav.Link as="span"><Link to="/register">Register</Link></Nav.Link>}
@@ -27,7 +27,7 @@ class _NavBar extends React.Component<INavBarProps> {
                 <Form inline>
                     {isLogged ? <Nav.Link as="span"><Link to="/cart"><CartIcon /></Link></Nav.Link> : null}
                     <FormControl style={{ marginLeft: "17px" }} type="text" placeholder="Search" className="mr-sm-2" />
-                    <Button variant="outline-light" size="sm">Search</Button>
+                    <Button variant="outline-success" size="sm">Search</Button>
                 </Form>
             </Navbar>
         );
