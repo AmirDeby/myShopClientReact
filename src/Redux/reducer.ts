@@ -38,11 +38,19 @@ export enum ActionType {
     InsertItemError = "INSERT_ITEM_ERROR",
     DeleteItemFromCart = "DELETE_ITEM_FROM_CART",
     SearchItem = "SEARCH_ITEM",
+    LogOff = "LOG_OFF"
 }
 
 export const reducer = (state: IState = initialState, action: IAction): IState => {
     switch (action.type) {
 
+        case ActionType.LogOff: {
+            localStorage.removeItem('token');
+            return {
+                ...state,
+                isLogged: false,
+            }
+        }
         case ActionType.SearchItem: {
             const { products } = action.payload;
             console.log(action.payload);

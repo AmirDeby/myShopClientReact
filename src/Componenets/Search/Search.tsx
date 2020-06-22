@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
-import { IState } from '../../Redux/reducer';
+import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
-import Button from 'react-bootstrap/Button';
-import { searchProductAction, getProductsAction } from '../../Redux/action';
+import { connect } from 'react-redux';
+import { getProductsAction, searchProductAction } from '../../Redux/action';
+import { IState } from '../../Redux/reducer';
 
 export interface ISearchProps {
     searchProduct(keyword: string): void,
@@ -26,8 +26,8 @@ class _Search extends React.Component<ISearchProps, ISearchState> {
         }
         return (
             <Form onSubmit={this.onSubmit} inline>
-                <FormControl onChange={this.onChangeSearch} name="keyword" style={{ marginLeft: "17px" }} type="text" placeholder="Search" className="mr-sm-2" />
-                <Button type="submit" variant="outline-success" size="sm">Search</Button>
+                <FormControl style={{ width: "500px" }} onChange={this.onChangeSearch} name="keyword" type="text" placeholder="Search" className="mr-sm-2" />
+                <Button style={{ marginRight: "260px" }}type="submit" variant="outline-success" size="sm">Search</Button>
             </Form>
         );
     }

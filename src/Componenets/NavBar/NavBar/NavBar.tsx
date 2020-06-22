@@ -6,13 +6,14 @@ import { Link } from 'react-router-dom';
 import { IState } from '../../../Redux/reducer';
 import { CartIcon } from '../../CartIcon/CartIcon';
 import { Search } from '../../Search/Search';
+import { LogOfButton } from '../../LogOffButton/LogOffButton';
 
 export interface INavBarProps {
     isLogged: boolean,
 }
 
 class _NavBar extends React.Component<INavBarProps> {
-   
+
     public render() {
         const { isLogged } = this.props;
         return (
@@ -23,8 +24,11 @@ class _NavBar extends React.Component<INavBarProps> {
                     {isLogged ? null : <Nav.Link as="span"><Link to="/login">Login</Link></Nav.Link>}
                     {isLogged ? <Nav.Link as="span"><Link to="/products">Products</Link></Nav.Link> : null}
                 </Nav>
-                    {isLogged ? <Nav.Link as="span"><Link to="/cart"><CartIcon /></Link></Nav.Link> : null}
+                <div style={{ margin: "auto"}}>
                     <Search />
+                </div>
+                {isLogged ? <Nav.Link as="span"><Link to="/cart"><CartIcon /></Link></Nav.Link> : null}
+                {isLogged ? < LogOfButton /> : null}
             </Navbar>
         );
     }

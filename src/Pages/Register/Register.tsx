@@ -1,4 +1,4 @@
-import Box from '@material-ui/core/Box';
+import { StyledComponentProps, Theme, withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -6,11 +6,10 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
 import { registerAction, resetErrorMessageAction } from '../../Redux/action';
 import { IState } from '../../Redux/reducer';
 import '../Register/Register.css';
-import { Redirect } from 'react-router';
-import { withStyles, StyledComponentProps, Theme } from '@material-ui/core';
 
 export interface IRegisterProps extends StyledComponentProps {
     register(firstName: string, lastName: string, email: string, password: string): void,
@@ -18,6 +17,7 @@ export interface IRegisterProps extends StyledComponentProps {
     isLogged: boolean,
     reserErrorMessage(): void,
 }
+
 const styles = (theme: Theme) => ({
     form: {
         width: '100%', // Fix IE 11 issue.
@@ -53,82 +53,77 @@ class _Register extends React.Component<IRegisterProps, IRegisterState> {
             return <Redirect to="/products" />
         }
         return (
-            <div className="register-main-div">
-                <div>
-                    <form className={classes.form} noValidate onSubmit={this.onSubmit}>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    type="text"
-                                    autoComplete="fname"
-                                    name="firstName"
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    label="First Name"
-                                    autoFocus
-                                    onChange={this.handlerChange}
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    type="text"
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    label="Last Name"
-                                    name="lastName"
-                                    autoComplete="lname"
-                                    onChange={this.handlerChange}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    type="email"
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    label="Email Address"
-                                    name="email"
-                                    autoComplete="email"
-                                    onChange={this.handlerChange}
-                                />
-                                <span style={{ color: "red" }} className={["error-email", error ? 'visible' : 'invisible'].join(' ')}>*The Email is taken,try another</span>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    name="password"
-                                    label="Password"
-                                    type="password"
-                                    autoComplete="current-password"
-                                    onChange={this.handlerChange}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <FormControlLabel
-                                    control={<Checkbox value="allowExtraEmails" color="primary" />}
-                                    label="I want to receive inspiration, marketing promotions and updates via email."
-                                />
-                            </Grid>
-                        </Grid>
-                        <Button
-                            disabled={!isFilled}
-                            type="submit"
+            <form className="register-main-div" noValidate onSubmit={this.onSubmit}>
+                <Grid container spacing={2}>
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                            type="text"
+                            autoComplete="fname"
+                            name="firstName"
+                            variant="outlined"
+                            required
                             fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                        >
-                            Sign Up
+                            label="First Name"
+                            autoFocus
+                            onChange={this.handlerChange}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                            type="text"
+                            variant="outlined"
+                            required
+                            fullWidth
+                            label="Last Name"
+                            name="lastName"
+                            autoComplete="lname"
+                            onChange={this.handlerChange}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            type="email"
+                            variant="outlined"
+                            required
+                            fullWidth
+                            label="Email Address"
+                            name="email"
+                            autoComplete="email"
+                            onChange={this.handlerChange}
+                        />
+                        <span style={{ color: "red" }} className={["error-email", error ? 'visible' : 'invisible'].join(' ')}>*The Email is taken,try another</span>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            variant="outlined"
+                            required
+                            fullWidth
+                            name="password"
+                            label="Password"
+                            type="password"
+                            autoComplete="current-password"
+                            onChange={this.handlerChange}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <FormControlLabel
+                            control={<Checkbox value="allowExtraEmails" color="primary" />}
+                            label="I want to receive inspiration, marketing promotions and updates via email."
+                        />
+                    </Grid>
+                </Grid>
+                <Button
+                    disabled={!isFilled}
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                >
+                    Sign Up
                         </Button>
-                    </form>
-                </div>
-                <Box mt={5}>
-                </Box>
-            </div>);
+            </form>
+        )
     }
     canBeRegister = () => {
         const { password, lastName, firstName, email } = this.state;

@@ -13,6 +13,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { insertItemToCartAction } from '../../Redux/action';
 import { IState } from '../../Redux/reducer';
+import '../Product/Product.css';
+
 
 export interface IProductsProps extends StyledComponentProps {
     id?: number,
@@ -33,6 +35,7 @@ const styles = (theme: Theme) => ({
     card: {
         maxWidth: 353,
         margin: theme.spacing(1),
+        opacity: 0.95,
     },
     quantity: {
         width: 140,
@@ -70,7 +73,7 @@ class _Product extends React.Component<IProductsProps> {
                             {description}
                         </Typography>
                         <span style={{ textDecoration: "line-through" }} >Original Price : ${originalPrice}</span>
-                        <Chip style={{ marginRight: "5px" }} label={`Sale : ${salePrice}`} className={classes.chip} color="secondary" />
+                        <Chip style={{ marginRight: "5px" }} label={`Sale : $${salePrice}`} className={classes.chip} color="secondary" />
                     </CardContent>
                 </CardActionArea>
                 <TextField

@@ -109,7 +109,13 @@ export const registerAction = (firstName: string, lastName: string, email: strin
         }
     }
 }
-
+export const logOffAction = () => {
+    localStorage.removeItem('token');
+    return {
+        type: ActionType.LogOff,
+        payload: {}
+    }
+}
 export const resetErrorMessageAction = () => {
     return {
         type: ActionType.ResetErrorMessage,

@@ -12,6 +12,18 @@ import { loginAction, resetErrorMessageAction } from '../../Redux/action';
 import { IState } from '../../Redux/reducer';
 import '../Login/Login.css';
 import { Theme, withStyles, StyledComponentProps } from '@material-ui/core';
+import { createMuiTheme } from '@material-ui/core/styles';
+
+const theme = createMuiTheme({
+    palette: {
+        primary: {
+            main: '#fff9c4',
+        },
+        secondary: {
+            main: '#fff59d',
+        },
+    },
+});
 
 const styles = (theme: Theme) => ({
     avatar: {
@@ -56,12 +68,12 @@ class _Login extends React.Component<ILoginProps, ILoginState> {
             return <Redirect to="/products" />
         }
         return (
-            <Container component="main" maxWidth="xs">
+            <Container className="main-con" component="main" maxWidth="xs">
                 <div style={{ marginTop: "50px" }}>
                     <Typography component="h1" variant="h5">
                         Sign in
                     </Typography>
-                    <form className={classes.form} onSubmit={this.onSumbit} noValidate>
+                    <form onSubmit={this.onSumbit} noValidate>
                         <TextField
                             onChange={this.handlerOnChange}
                             value={email}

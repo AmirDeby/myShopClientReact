@@ -1,0 +1,8 @@
+.shadow-card {
+    -webkit-box-shadow: 28px 15px 15px -1px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 28px 15px 15px -1px rgba(0, 0, 0, 0.75);
+    box-shadow: 28px 15px 15px -1px rgba(0, 0, 0, 0.75);
+    max-width: 352;
+    opacity: 0.95;
+    margin: 8px;
+}
