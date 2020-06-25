@@ -17,7 +17,7 @@ class _NavBar extends React.Component<INavBarProps> {
     public render() {
         const { isLogged } = this.props;
         return (
-            <Navbar style={{ backgroundColor: "rgba(255, 235, 205, 0.651)" }}>
+            <Navbar style={{ backgroundColor: "rgba(191, 178, 162, 0.48)" }}>
                 <Navbar.Brand>WhiskyShop</Navbar.Brand>
                 <Nav className="mr-auto">
                     {isLogged ? null : <Nav.Link as="span"><Link to="/register">Register</Link></Nav.Link>}

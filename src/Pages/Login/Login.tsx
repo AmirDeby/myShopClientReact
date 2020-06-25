@@ -69,7 +69,7 @@ class _Login extends React.Component<ILoginProps, ILoginState> {
         }
         return (
             <Container className="main-con" component="main" maxWidth="xs">
-                <div style={{ marginTop: "50px" }}>
+                <div>
                     <Typography component="h1" variant="h5">
                         Sign in
                     </Typography>
@@ -113,7 +113,7 @@ class _Login extends React.Component<ILoginProps, ILoginState> {
                             <Grid item xs>
                             </Grid>
                             <Grid item>
-                                <Link style={{ marginRight: "90px" }} href="register" variant="body2">
+                                <Link className="login-link" style={{ marginRight: "90px" }} href="register" variant="body2">
                                     {"Don't have an account? Sign Up"}
                                 </Link>
                             </Grid>

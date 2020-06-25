@@ -1,5 +1,6 @@
 .register-main-div {
     width: 50%;
+    padding: 17px;
     margin: auto;
     margin-top: 55px;
     background-color: rgba(255, 254, 254, 0.74) !important;
@@ -7,4 +8,14 @@
     -moz-box-shadow: 18px 14px 18px 0px rgba(0, 0, 0, 0.72);
     box-shadow: 18px 14px 18px 0px rgba(0, 0, 0, 0.72);
     border-radius: 10px 10px;
+}
+
+.header-style {
+    margin-bottom: 15px !important;
+}
+
+.register-link:hover {
+    font-size: 17px;
+    transition: all 500ms;
+    font-size-adjust: 20px;
 }

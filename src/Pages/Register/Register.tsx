@@ -10,6 +10,8 @@ import { Redirect } from 'react-router';
 import { registerAction, resetErrorMessageAction } from '../../Redux/action';
 import { IState } from '../../Redux/reducer';
 import '../Register/Register.css';
+import Link from '@material-ui/core/Link';
+import Typography from '@material-ui/core/Typography';
 
 export interface IRegisterProps extends StyledComponentProps {
     register(firstName: string, lastName: string, email: string, password: string): void,
@@ -33,6 +35,7 @@ interface IRegisterState {
     lastName: string,
     email: string,
     password: string,
+    sendEmail: boolean,
 }
 
 class _Register extends React.Component<IRegisterProps, IRegisterState> {
@@ -41,6 +44,7 @@ class _Register extends React.Component<IRegisterProps, IRegisterState> {
         lastName: "",
         email: "",
         password: "",
+        sendEmail: false,
     }
     componentWillUnmount() {
         const { reserErrorMessage } = this.props;
@@ -54,6 +58,9 @@ class _Register extends React.Component<IRegisterProps, IRegisterState> {
         }
         return (
             <form className="register-main-div" noValidate onSubmit={this.onSubmit}>
+                <Typography className="header-style" component="h1" variant="h5">
+                    Sign Up
+                    </Typography>
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
                         <TextField
@@ -107,6 +114,7 @@ class _Register extends React.Component<IRegisterProps, IRegisterState> {
                     </Grid>
                     <Grid item xs={12}>
                         <FormControlLabel
+                            onChange={this.wantToReciveEmail}
                             control={<Checkbox value="allowExtraEmails" color="primary" />}
                             label="I want to receive inspiration, marketing promotions and updates via email."
                         />
@@ -122,8 +130,19 @@ class _Register extends React.Component<IRegisterProps, IRegisterState> {
                 >
                     Sign Up
                         </Button>
+                <Grid item>
+                    <Link className="register-link" style={{ marginRight: "90px" }} href="login" variant="body2">
+                        {"Have an account? Sign In"}
+                    </Link>
+                </Grid>
             </form>
+
         )
+    }
+    wantToReciveEmail = () => {
+        this.setState({
+            sendEmail: true
+        })
     }
     canBeRegister = () => {
         const { password, lastName, firstName, email } = this.state;
@@ -138,13 +157,14 @@ class _Register extends React.Component<IRegisterProps, IRegisterState> {
         const { value, name } = e.target;
         this.setState({
             [name]: value
-        } as any)
+        } as any);
     }
     onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         const { firstName, lastName, email, password } = this.state;
         const { register } = this.props;
         register(firstName, lastName, email, password);
+
     }
 }
 

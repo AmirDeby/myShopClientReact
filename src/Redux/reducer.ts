@@ -45,7 +45,6 @@ export const reducer = (state: IState = initialState, action: IAction): IState =
     switch (action.type) {
 
         case ActionType.LogOff: {
-            localStorage.removeItem('token');
             return {
                 ...state,
                 isLogged: false,

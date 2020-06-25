@@ -27,9 +27,6 @@ const styles = (theme: Theme) => ({
         width: 130,
         marginLeft: 5,
     },
-    chip: {
-        margin: 17,
-    }
 });
 
 class _CartItem extends React.Component<ICartProps> {
@@ -54,9 +51,11 @@ class _CartItem extends React.Component<ICartProps> {
                         <Chip label={`Qauntity : ${quantity}`} className={classes.chip} color="secondary" />
                     </CardContent>
                 </CardActionArea>
+                <div>
+                    <span style={{ textDecoration: "line-through" }}>Original Price : {originalPrice}</span>
+                </div>
                 <CardActions>
-                    <Chip style={{ textDecoration: "line-through" }} label={`Original Price : ${originalPrice}`} className={classes.chip} color="secondary" variant="outlined" />
-                    <Chip label={`Sale : ${salePrice}`} className={classes.chip} color="secondary" variant="outlined" />
+                    <Chip style={{ margin: "auto" }} label={`Sale : ${salePrice}`} color="secondary" variant="outlined" />
                 </CardActions>
                 <IconButton onClick={this.deleteItemFromCart} aria-label="delete">
                     <DeleteIcon />
