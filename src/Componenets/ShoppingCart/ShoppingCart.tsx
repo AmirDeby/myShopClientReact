@@ -1,15 +1,14 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { IState } from '../../Redux/reducer';
-import { getUserCartAction } from '../../Redux/action';
 import { ICartItem } from '../../Models/cart';
+import { getUserCartAction } from '../../Redux/action';
+import { IState } from '../../Redux/reducer';
 import { CartItem } from '../CartItem/CartItem';
-import { Redirect } from 'react-router';
+import { ContinueButton } from '../ContinueButton/ContinueButton';
 
 export interface IShoppingCartProps {
     getCart(): void,
     cart: ICartItem[],
-    isLogged: boolean,
 }
 
 class _ShoppingCart extends React.Component<IShoppingCartProps> {
@@ -18,10 +17,7 @@ class _ShoppingCart extends React.Component<IShoppingCartProps> {
         getCart();
     }
     public render() {
-        const { cart, isLogged } = this.props;
-        if (!isLogged) {
-            return <Redirect to='/login' />
-        }
+        const { cart } = this.props;
         return (
             <div className="row">
                 {cart.map((item) =>
@@ -29,6 +25,9 @@ class _ShoppingCart extends React.Component<IShoppingCartProps> {
                         <CartItem {...item} />
                     </div>
                 )}
+                <div>
+                    <ContinueButton />
+                </div>
             </div>
         );
     }
@@ -37,7 +36,6 @@ class _ShoppingCart extends React.Component<IShoppingCartProps> {
 const mapStateToProps = (state: IState) => {
     return {
         cart: state.userCart,
-        isLogged: state.isLogged
     }
 }
 const mapDispatchToProps = {

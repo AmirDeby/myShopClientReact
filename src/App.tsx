@@ -8,6 +8,8 @@ import { ProductsPage } from './Pages/ProductsPage/ProductsPage';
 import { Register } from './Pages/Register/Register';
 import { IState } from './Redux/reducer';
 import { ShoppingCart } from './Componenets/ShoppingCart/ShoppingCart';
+import { PaymentPage } from './Pages/PaymentPage/PaymentPage';
+import { PrivateRoute } from './Componenets/PrivateRoute/PrivateRoute';
 
 export interface IAppProps {
 }
@@ -27,13 +29,17 @@ class _App extends React.Component<IAppProps> {
           <Route path="/login">
             <Login />
           </Route>
-          <Route path="/products">
+          <PrivateRoute path="/products">
             <ProductsPage />
-          </Route>
-          <Route path="/cart">
+          </PrivateRoute>
+          <PrivateRoute path="/cart">
             <h2>Shopping Cart</h2>
             <ShoppingCart />
-          </Route>
+          </PrivateRoute>
+          <PrivateRoute path="/payment">
+            <h1>Payment Page</h1>
+            <PaymentPage />
+          </PrivateRoute>
           <Route>
             page not found
         </Route>

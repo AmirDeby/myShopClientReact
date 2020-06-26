@@ -6,24 +6,6 @@ body {
   background-image: url('/42.jpg');
   background-size: cover;
   background-repeat: no-repeat;
-}
-
-.App-logo {
-  height: 40vmin;
-  color: rgba(238, 197, 147, 0.644);
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #09d3ac;
+  background-color: #fff8 !important;
+  background-blend-mode: color !important;
 }

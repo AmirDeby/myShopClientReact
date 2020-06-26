@@ -1,15 +1,12 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { IState } from '../../Redux/reducer';
-import { getProductsAction, getUserCartAction } from '../../Redux/action';
-import { Redirect } from 'react-router';
-import { IProduct } from '../../Models/Product';
 import { Product } from '../../Componenets/Product/Product';
-
+import { IProduct } from '../../Models/Product';
+import { getProductsAction, getUserCartAction } from '../../Redux/action';
+import { IState } from '../../Redux/reducer';
 
 export interface IProductsPageProps {
     getProducts(): void,
-    isLogged: boolean,
     products: IProduct[],
     getUserCart():void,
 }
@@ -21,10 +18,7 @@ class _ProductsPage extends React.Component<IProductsPageProps> {
         getUserCart();
     }
     public render() {
-        const { isLogged, products } = this.props;
-        if (!isLogged) {
-            return <Redirect to="/login" />
-        }
+        const { products } = this.props;
         return (
             <div className="row">
                 {products.map((product) =>
@@ -39,7 +33,6 @@ class _ProductsPage extends React.Component<IProductsPageProps> {
 
 const mapStateToProps = (state: IState) => {
     return {
-        isLogged: state.isLogged,
         products: state.products,
     }
 }

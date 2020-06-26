@@ -3,7 +3,7 @@
     padding: 17px;
     margin: auto;
     margin-top: 55px;
-    background-color: rgba(255, 254, 254, 0.74) !important;
+    background-color: rgba(255, 254, 254, 0.74);
     -webkit-box-shadow: 18px 14px 18px 0px rgba(0, 0, 0, 0.72);
     -moz-box-shadow: 18px 14px 18px 0px rgba(0, 0, 0, 0.72);
     box-shadow: 18px 14px 18px 0px rgba(0, 0, 0, 0.72);

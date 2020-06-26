@@ -1,3 +1,4 @@
+import { StyledComponentProps, Theme, withStyles } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
@@ -11,19 +12,6 @@ import { Redirect } from 'react-router';
 import { loginAction, resetErrorMessageAction } from '../../Redux/action';
 import { IState } from '../../Redux/reducer';
 import '../Login/Login.css';
-import { Theme, withStyles, StyledComponentProps } from '@material-ui/core';
-import { createMuiTheme } from '@material-ui/core/styles';
-
-const theme = createMuiTheme({
-    palette: {
-        primary: {
-            main: '#fff9c4',
-        },
-        secondary: {
-            main: '#fff59d',
-        },
-    },
-});
 
 const styles = (theme: Theme) => ({
     avatar: {
