@@ -72,8 +72,8 @@ class _Product extends React.Component<IProductsProps> {
                         <Typography variant="body2" color="textSecondary" component="p">
                             {description}
                         </Typography>
-                        <span style={{ textDecoration: "line-through" }} >Original Price : ${originalPrice}</span>
-                        <Chip style={{ marginRight: "5px" }} label={`Sale : $${salePrice}`} className={classes.chip} color="secondary" />
+                        <span style={{ textDecoration: "line-through" }} >Original Price : €{originalPrice}</span>
+                        <Chip style={{ marginRight: "5px" }} label={`Sale : €${salePrice}`} className={classes.chip} color="secondary" />
                     </CardContent>
                 </CardActionArea>
                 <TextField

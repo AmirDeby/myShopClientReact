@@ -1,0 +1,9 @@
+.payment-style {
+    width: 20%;
+    margin: auto;
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+    border-radius: 12px 12px;
+    padding: 15px;
+}
