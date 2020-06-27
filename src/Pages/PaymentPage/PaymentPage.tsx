@@ -11,7 +11,7 @@ import { ICartItem } from '../../Models/cart';
 import { getUserCartAction } from '../../Redux/action';
 import { IState } from '../../Redux/reducer';
 import '../PaymentPage/PaymentPage.css';
-import PaymentDetails from '../../Componenets/PaymentDetails/PaymentDetails';
+import { PaymentDetails } from '../../Componenets/PaymentDetails/PaymentDetails';
 
 export interface IPaymentPageProps {
     userCart: ICartItem[],
@@ -64,9 +64,6 @@ class _PaymentPage extends React.Component<IPaymentPageProps, IPaymentPageState>
                         <Button color="primary" variant="outlined" onClick={this.handleClose}>
                             Close
                             </Button>
-                        <Button color="secondary" variant="contained" onClick={this.handleClose}>
-                            Save Changes
-                   </Button>
                     </Modal.Footer>
                 </Modal>
             </Card>
