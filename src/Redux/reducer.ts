@@ -6,6 +6,7 @@ export interface IState {
     errorMessage: string,
     products: IProduct[],
     userCart: ICartItem[],
+    loader: boolean,
 }
 
 export interface IAction {
@@ -24,6 +25,7 @@ const initialState: IState = {
     errorMessage: "",
     products: [],
     userCart: [],
+    loader: false,
 };
 
 export enum ActionType {
@@ -38,12 +40,19 @@ export enum ActionType {
     InsertItemError = "INSERT_ITEM_ERROR",
     DeleteItemFromCart = "DELETE_ITEM_FROM_CART",
     SearchItem = "SEARCH_ITEM",
-    LogOff = "LOG_OFF"
+    SearchItemFail = "SEARCH_ITEM_FAIL",
+    LogOff = "LOG_OFF",
+    SendCreditCardDetails = "SEND_CREDIT_CARD_DETAILS",
 }
 
 export const reducer = (state: IState = initialState, action: IAction): IState => {
     switch (action.type) {
 
+        case ActionType.SendCreditCardDetails: {
+            return {
+                ...state,
+            }
+        }
         case ActionType.LogOff: {
             return {
                 ...state,
@@ -56,6 +65,11 @@ export const reducer = (state: IState = initialState, action: IAction): IState =
             return {
                 ...state,
                 products
+            }
+        }
+        case ActionType.SearchItemFail: {
+            return {
+                ...state,
             }
         }
         case ActionType.DeleteItemFromCart: {

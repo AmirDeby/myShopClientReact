@@ -2,15 +2,31 @@ import axios from 'axios';
 import { Dispatch } from 'react';
 import { IAction, ActionType } from './reducer';
 
+export const sendCreditCardDetailsAction = (cardName: string, cardNumber: string, cvv: string, expDate: string) => {
+    return async (disptach: Dispatch<IAction>) => {
+        const token = localStorage.getItem('token')
+        const result = await axios.post('http://localhost:5000/creditcard/', { cardName, cardNumber, cvv, expDate },
+            { headers: { Authorization: `Bearer ${token}` } });
+        console.log(result);
+    }
+}
 export const searchProductAction = (keyword: string) => {
     return async (dispatch: Dispatch<IAction>) => {
-        const token = localStorage.getItem('token');
-        const result = await axios.post('http://localhost:5000/products/search', { keyword },
-            { headers: { Authorization: `Bearer ${token}` } });
-        dispatch({
-            type: ActionType.SearchItem,
-            payload: { products: result.data },
-        })
+        try {
+            const token = localStorage.getItem('token');
+            const result = await axios.post('http://localhost:5000/products/search', { keyword },
+                { headers: { Authorization: `Bearer ${token}` } });
+            dispatch({
+                type: ActionType.SearchItem,
+                payload: { products: result.data },
+            })
+        }
+        catch (e) {
+            dispatch({
+                type: ActionType.SearchItemFail,
+                payload: { msg: e.message },
+            })
+        }
     }
 }
 

@@ -19,13 +19,15 @@ class _ShoppingCart extends React.Component<IShoppingCartProps> {
     public render() {
         const { cart } = this.props;
         return (
-            <div className="row">
-                {cart.map((item) =>
-                    <div key={item.id}>
-                        <CartItem {...item} />
-                    </div>
-                )}
-                <div>
+            <div>
+                <div className="row">
+                    {cart.map((item) =>
+                        <div key={item.id}>
+                            <CartItem {...item} />
+                        </div>
+                    )}
+                </div>
+                <div style={{ marginTop: "10px" }}>
                     <ContinueButton />
                 </div>
             </div>

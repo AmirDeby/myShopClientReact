@@ -3,7 +3,8 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import Link from '@material-ui/core/Link';
+import LinkM from '@material-ui/core/Link';
+import { Link } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import * as React from 'react';
@@ -101,7 +102,7 @@ class _Login extends React.Component<ILoginProps, ILoginState> {
                             <Grid item xs>
                             </Grid>
                             <Grid item>
-                                <Link className="login-link" style={{ marginRight: "90px" }} href="register" variant="body2">
+                                <Link className="login-link" style={{ marginRight: "90px" }} to="/register">
                                     {"Don't have an account? Sign Up"}
                                 </Link>
                             </Grid>
@@ -135,7 +136,6 @@ class _Login extends React.Component<ILoginProps, ILoginState> {
     }
 
 }
-
 const mapStateToProps = (state: IState) => {
     return {
         isLogged: state.isLogged,
@@ -153,14 +153,13 @@ export const Login = connect(
 )(withStyles(styles)(_Login));
 
 
-
 function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
             {'Copyright © '}
-            <Link color="inherit" href="home">
+            <LinkM color="inherit" href="home">
                 Your Website
-      </Link>{' '}
+      </LinkM>{' '}
             {new Date().getFullYear()}
             {'.'}
         </Typography>

@@ -20,7 +20,7 @@ export interface ICartProps extends ICartItem, StyledComponentProps {
 
 const styles = (theme: Theme) => ({
     card: {
-        maxWidth: 300,
+        maxWidth: 250,
         margin: theme.spacing(1),
     },
     quantity: {
@@ -39,8 +39,8 @@ class _CartItem extends React.Component<ICartProps> {
                     <CardMedia
                         component="img"
                         alt="Contemplative Reptile"
-                        height="140"
-                        width="140"
+                        height="100"
+                        width="100"
                         image={image}
                         title={name}
                     />

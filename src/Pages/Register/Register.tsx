@@ -10,7 +10,7 @@ import { Redirect } from 'react-router';
 import { registerAction, resetErrorMessageAction } from '../../Redux/action';
 import { IState } from '../../Redux/reducer';
 import '../Register/Register.css';
-import Link from '@material-ui/core/Link';
+import { Link } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 
 export interface IRegisterProps extends StyledComponentProps {
@@ -131,7 +131,7 @@ class _Register extends React.Component<IRegisterProps, IRegisterState> {
                     Sign Up
                         </Button>
                 <Grid item>
-                    <Link className="register-link" style={{ marginRight: "90px" }} href="login" variant="body2">
+                    <Link className="register-link" to="/login">
                         {"Have an account? Sign In"}
                     </Link>
                 </Grid>

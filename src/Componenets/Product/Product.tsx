@@ -30,7 +30,6 @@ export interface IProductsProps extends StyledComponentProps {
 interface IProductsState {
     quantity: number,
 }
-
 const styles = (theme: Theme) => ({
     card: {
         maxWidth: 353,

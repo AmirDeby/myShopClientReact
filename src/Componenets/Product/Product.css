@@ -6,3 +6,7 @@
     opacity: 0.95;
     margin: 8px;
 }
+
+.main-pro {
+    user-select: none;
+}
