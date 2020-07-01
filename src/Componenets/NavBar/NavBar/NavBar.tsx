@@ -24,8 +24,8 @@ class _NavBar extends React.Component<INavBarProps> {
                     {isLogged ? null : <Nav.Link as="span"><Link to="/login">Login</Link></Nav.Link>}
                     {isLogged ? <Nav.Link as="span"><Link to="/products">Products</Link></Nav.Link> : null}
                 </Nav>
-                <div style={{ margin: "auto"}}>
-                    {isLogged ? <Search /> : null} 
+                <div style={{ margin: "auto" }}>
+                    {isLogged ? <Search /> : null}
                 </div>
                 {isLogged ? <Nav.Link as="span"><Link to="/cart"><CartIcon /></Link></Nav.Link> : null}
                 {isLogged ? < LogOfButton /> : null}

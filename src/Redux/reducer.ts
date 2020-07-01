@@ -35,11 +35,13 @@ export enum ActionType {
     LoginSuccess = "LOGIN_SUCCESS",
     ResetErrorMessage = "RESET_ERROR_MESSAGE",
     GetProducts = "GET_PRODUCTS",
+    GetProductsPending = "GET_PRODUCTS_PENDING",
     GetUserCart = "GET_USER_CART",
     InsertItemToCart = "INSERT_ITEM_TO_CART",
     InsertItemError = "INSERT_ITEM_ERROR",
     DeleteItemFromCart = "DELETE_ITEM_FROM_CART",
     SearchItem = "SEARCH_ITEM",
+    SearchIteamPending = "SEARCH_ITEM_PENDING",
     SearchItemFail = "SEARCH_ITEM_FAIL",
     LogOff = "LOG_OFF",
     SendCreditCardDetails = "SEND_CREDIT_CARD_DETAILS",
@@ -48,6 +50,12 @@ export enum ActionType {
 export const reducer = (state: IState = initialState, action: IAction): IState => {
     switch (action.type) {
 
+        case ActionType.SearchIteamPending: {
+            return {
+                ...state,
+                loader: true,
+            }
+        }
         case ActionType.SendCreditCardDetails: {
             return {
                 ...state,
@@ -64,12 +72,14 @@ export const reducer = (state: IState = initialState, action: IAction): IState =
             console.log(action.payload);
             return {
                 ...state,
-                products
+                products,
+                loader: false,
             }
         }
         case ActionType.SearchItemFail: {
             return {
                 ...state,
+                loader: false,
             }
         }
         case ActionType.DeleteItemFromCart: {
@@ -82,7 +92,6 @@ export const reducer = (state: IState = initialState, action: IAction): IState =
                 userCart
             }
         }
-
         case ActionType.GetUserCart: {
             const { userCart } = action.payload;
             return {
@@ -117,6 +126,13 @@ export const reducer = (state: IState = initialState, action: IAction): IState =
             return {
                 ...state,
                 products,
+                loader: false,
+            }
+        }
+        case ActionType.GetProductsPending: {
+            return {
+                ...state,
+                loader: true
             }
         }
         case ActionType.RegisterSuccess: {

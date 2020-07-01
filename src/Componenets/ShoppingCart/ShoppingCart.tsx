@@ -5,10 +5,12 @@ import { getUserCartAction } from '../../Redux/action';
 import { IState } from '../../Redux/reducer';
 import { CartItem } from '../CartItem/CartItem';
 import { ContinueButton } from '../ContinueButton/ContinueButton';
+import Loader from '../Loader/Loader';
 
 export interface IShoppingCartProps {
     getCart(): void,
     cart: ICartItem[],
+    isLoading:boolean,
 }
 
 class _ShoppingCart extends React.Component<IShoppingCartProps> {
@@ -17,7 +19,10 @@ class _ShoppingCart extends React.Component<IShoppingCartProps> {
         getCart();
     }
     public render() {
-        const { cart } = this.props;
+        const { cart, isLoading } = this.props;
+        if (isLoading) {
+            return <Loader />
+        }
         return (
             <div>
                 <div className="row">
@@ -38,6 +43,7 @@ class _ShoppingCart extends React.Component<IShoppingCartProps> {
 const mapStateToProps = (state: IState) => {
     return {
         cart: state.userCart,
+        isLoading:state.loader,
     }
 }
 const mapDispatchToProps = {

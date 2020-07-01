@@ -12,6 +12,10 @@ export const sendCreditCardDetailsAction = (cardName: string, cardNumber: string
 }
 export const searchProductAction = (keyword: string) => {
     return async (dispatch: Dispatch<IAction>) => {
+        dispatch({
+            type: ActionType.SearchIteamPending,
+            payload: {}
+        })
         try {
             const token = localStorage.getItem('token');
             const result = await axios.post('http://localhost:5000/products/search', { keyword },
@@ -75,6 +79,10 @@ export const insertItemToCartAction = (id: number, quantity: number) => {
 
 export const getProductsAction = () => {
     return async (dispatch: Dispatch<IAction>) => {
+        dispatch({
+            type: ActionType.GetProductsPending,
+            payload: {}
+        })
         const token = localStorage.getItem('token');
         const { data: products } = await axios.get('http://localhost:5000/products',
             { headers: { Authorization: `Bearer ${token}` } });
