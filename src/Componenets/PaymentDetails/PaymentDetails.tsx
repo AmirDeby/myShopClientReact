@@ -45,10 +45,10 @@ class _PaymentDetails extends React.Component<IPaymentDetailsProps, IPaymentDeta
           <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
               <TextField
+                required
                 value={cardName}
                 onChange={this.handleOnChange}
                 select
-                required
                 name="cardName" label="Name on card"
                 fullWidth autoComplete="cc-name">
                 {cardsNames.map(cardName =>
@@ -75,6 +75,7 @@ class _PaymentDetails extends React.Component<IPaymentDetailsProps, IPaymentDeta
             </Grid>
             <Grid style={{ marginTop: "16px" }} item xs={12} md={6}>
               <DatePicker
+                required
                 views={["year", "month"]}
                 label="Year and Month"
                 name="expDate"
@@ -88,9 +89,9 @@ class _PaymentDetails extends React.Component<IPaymentDetailsProps, IPaymentDeta
             </Grid>
             <Grid style={{ marginTop: "15px" }} item xs={12} md={6}>
               <TextField
+                required
                 value={cvv}
                 onChange={this.handleOnChange}
-                required
                 name="cvv"
                 label="CVV"
                 helperText="Last three digits on signature strip"
@@ -132,6 +133,7 @@ class _PaymentDetails extends React.Component<IPaymentDetailsProps, IPaymentDeta
       cardName: "",
       cardNumber: "",
       cvv: "",
+      expDate: null
     })
   }
 }

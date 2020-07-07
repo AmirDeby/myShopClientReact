@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router';
 import './App.css';
 import { NavBar } from './Componenets/NavBar/NavBar/NavBar';
+import { PrivateRoute } from './Componenets/PrivateRoute/PrivateRoute';
+import { ShoppingCart } from './Componenets/ShoppingCart/ShoppingCart';
 import { Login } from './Pages/Login/Login';
+import { PaymentPage } from './Pages/PaymentPage/PaymentPage';
 import { ProductsPage } from './Pages/ProductsPage/ProductsPage';
 import { Register } from './Pages/Register/Register';
 import { IState } from './Redux/reducer';
-import { ShoppingCart } from './Componenets/ShoppingCart/ShoppingCart';
-import { PaymentPage } from './Pages/PaymentPage/PaymentPage';
-import { PrivateRoute } from './Componenets/PrivateRoute/PrivateRoute';
 
 export interface IAppProps {
 }

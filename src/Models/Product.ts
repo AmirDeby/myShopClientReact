@@ -5,4 +5,5 @@ export interface IProduct {
     image: string,
     originalPrice: number,
     salePrice: number,
+    inventory:number,
 }

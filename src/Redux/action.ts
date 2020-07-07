@@ -140,6 +140,18 @@ export const logOffAction = () => {
         payload: {}
     }
 }
+export const openModalAction = () => {
+    return {
+        type: ActionType.OpenModal,
+        payload: {}
+    }
+}
+export const CloseModalAction = () => {
+    return {
+        type: ActionType.CloseModal,
+        payload: {}
+    }
+}
 export const resetErrorMessageAction = () => {
     return {
         type: ActionType.ResetErrorMessage,

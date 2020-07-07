@@ -5,17 +5,17 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { sumBy } from 'lodash';
 import * as React from 'react';
-import Modal from 'react-bootstrap/Modal';
 import { connect } from 'react-redux';
+import { ModalPay } from '../../Componenets/Modal/Modal';
 import { ICartItem } from '../../Models/cart';
-import { getUserCartAction } from '../../Redux/action';
+import { getUserCartAction, openModalAction } from '../../Redux/action';
 import { IState } from '../../Redux/reducer';
 import '../PaymentPage/PaymentPage.css';
-import { PaymentDetails } from '../../Componenets/PaymentDetails/PaymentDetails';
 
 export interface IPaymentPageProps {
     userCart: ICartItem[],
     getUserCart(): void,
+    openModal(): void,
 }
 interface IPaymentPageState {
     setOpen: boolean,
@@ -53,26 +53,13 @@ class _PaymentPage extends React.Component<IPaymentPageProps, IPaymentPageState>
                 <CardActions>
                     <Button color="secondary" onClick={this.handleOpen} type="button" style={{ margin: "auto" }} size="small">Click To Pay</Button>
                 </CardActions>
-                <Modal show={this.state.setOpen} onHide={this.handleClose}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Enter Credit Card</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <PaymentDetails />
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button color="primary" variant="outlined" onClick={this.handleClose}>
-                            Close
-                            </Button>
-                    </Modal.Footer>
-                </Modal>
+                <ModalPay />
             </Card>
         );
     }
     handleOpen = () => {
-        this.setState({
-            setOpen: true
-        })
+        const { openModal } = this.props;
+        openModal()
     }
     handleClose = () => {
         this.setState({
@@ -88,6 +75,7 @@ const mapStateToProps = (state: IState) => {
 }
 const mapDispatchToProps = {
     getUserCart: getUserCartAction,
+    openModal: openModalAction,
 }
 
 export const PaymentPage = connect(

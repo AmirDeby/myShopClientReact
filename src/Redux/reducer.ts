@@ -1,5 +1,5 @@
-import { IProduct } from "../Models/Product";
 import { ICartItem } from "../Models/cart";
+import { IProduct } from "../Models/Product";
 
 export interface IState {
     isLogged: boolean,
@@ -7,6 +7,7 @@ export interface IState {
     products: IProduct[],
     userCart: ICartItem[],
     loader: boolean,
+    openModal: boolean,
 }
 
 export interface IAction {
@@ -26,9 +27,12 @@ const initialState: IState = {
     products: [],
     userCart: [],
     loader: false,
+    openModal: false,
 };
 
 export enum ActionType {
+    OpenModal = "OPEN_MODAL",
+    CloseModal = "CLOSE_MODAL",
     RegisterFail = "REGISTER_FAIL",
     RegisterSuccess = "REGISTER_SUCCESS",
     LoginFail = "LOGIN_FAIL",
@@ -50,6 +54,18 @@ export enum ActionType {
 export const reducer = (state: IState = initialState, action: IAction): IState => {
     switch (action.type) {
 
+        case ActionType.CloseModal: {
+            return {
+                ...state,
+                openModal: false,
+            }
+        }
+        case ActionType.OpenModal: {
+            return {
+                ...state,
+                openModal: true,
+            }
+        }
         case ActionType.SearchIteamPending: {
             return {
                 ...state,
@@ -103,6 +119,13 @@ export const reducer = (state: IState = initialState, action: IAction): IState =
             const { id, quantity } = action.payload;
             const newProducts = state.products.concat();
             const product = newProducts.find(product => product.id === id);
+            // const itemIndex = newProducts.findIndex(product => product.id === id);
+            // const currentItem = newProducts[itemIndex];
+            // newProducts[itemIndex] = {
+            //     ...currentItem,
+            //     inventory: product.inventory - quantity,
+            // }
+            // console.log(newProducts);
             const cartItem: ICartItem = {
                 ...product,
                 quantity
@@ -112,6 +135,7 @@ export const reducer = (state: IState = initialState, action: IAction): IState =
                 ...state,
                 errorMessage: "",
                 userCart: newUserCart,
+                // products: newProducts
             }
         }
         case ActionType.InsertItemError: {
