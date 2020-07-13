@@ -12,7 +12,7 @@ class _PrivateRoute extends React.Component<IPrivateRouteProps> {
     public render() {
         const { isLogged, children, ...rest } = this.props;
         if (!isLogged) {
-            return <Redirect to="login" />
+            return <Redirect to="/login" />
         }
         return (
             <Route {...rest}>

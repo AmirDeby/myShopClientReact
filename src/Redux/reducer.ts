@@ -1,11 +1,14 @@
 import { ICartItem } from "../Models/cart";
 import { IProduct } from "../Models/Product";
+import { IOrder } from "../Models/order";
 
 export interface IState {
     isLogged: boolean,
     errorMessage: string,
     products: IProduct[],
     userCart: ICartItem[],
+    orders: IOrder[],
+    userOrders:[],
     loader: boolean,
     openModal: boolean,
 }
@@ -26,11 +29,15 @@ const initialState: IState = {
     errorMessage: "",
     products: [],
     userCart: [],
+    userOrders:[],
+    orders: [],
     loader: false,
     openModal: false,
 };
 
 export enum ActionType {
+    GetUserOrders = "GET_USER_ORDERS",
+    GetOrders = "GET_ORDERS",
     OpenModal = "OPEN_MODAL",
     CloseModal = "CLOSE_MODAL",
     RegisterFail = "REGISTER_FAIL",
@@ -54,6 +61,21 @@ export enum ActionType {
 export const reducer = (state: IState = initialState, action: IAction): IState => {
     switch (action.type) {
 
+        case ActionType.GetUserOrders: {
+            const { userOrders } = action.payload;
+            console.log(userOrders);
+            return {
+                ...state,
+                userOrders
+            }
+        }
+        case ActionType.GetOrders: {
+            const { orders } = action.payload;
+            return {
+                ...state,
+                orders,
+            }
+        }
         case ActionType.CloseModal: {
             return {
                 ...state,
@@ -73,8 +95,10 @@ export const reducer = (state: IState = initialState, action: IAction): IState =
             }
         }
         case ActionType.SendCreditCardDetails: {
+
             return {
                 ...state,
+                userCart: [],
             }
         }
         case ActionType.LogOff: {

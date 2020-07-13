@@ -7,6 +7,7 @@ import { IState } from '../../../Redux/reducer';
 import { CartIcon } from '../../CartIcon/CartIcon';
 import { Search } from '../../Search/Search';
 import { LogOfButton } from '../../LogOffButton/LogOffButton';
+import OrdersIcon from '../../OrdersIcon/OrdersIcon';
 
 export interface INavBarProps {
     isLogged: boolean,
@@ -27,6 +28,7 @@ class _NavBar extends React.Component<INavBarProps> {
                 <div style={{ margin: "auto" }}>
                     {isLogged ? <Search /> : null}
                 </div>
+                {isLogged ? <Nav.Link as="span"><Link to="/orders"><OrdersIcon /></Link></Nav.Link> : null}
                 {isLogged ? <Nav.Link as="span"><Link to="/cart"><CartIcon /></Link></Nav.Link> : null}
                 {isLogged ? < LogOfButton /> : null}
             </Navbar>

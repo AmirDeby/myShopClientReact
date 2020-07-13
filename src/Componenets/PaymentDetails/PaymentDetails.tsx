@@ -12,7 +12,7 @@ import Form from 'react-bootstrap/Form';
 import { Button } from '@material-ui/core';
 import { sendCreditCardDetailsAction } from '../../Redux/action';
 import { DatePicker } from "@material-ui/pickers";
-import { } from 'date-fns';
+import { Redirect } from 'react-router';
 
 const REGEX_CREDIT_CARD = "^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\\d{3})\\d{11})$"
 
@@ -24,18 +24,27 @@ interface IPaymentDetailsState {
   cardNumber: string,
   expDate: Date,
   cvv: string,
+  isFilled: boolean,
 }
 
 class _PaymentDetails extends React.Component<IPaymentDetailsProps, IPaymentDetailsState> {
+  componentWillUnmount() {
+    this.setState({
+      isFilled: false,
+    });
+  }
   state: IPaymentDetailsState = {
     cardName: "",
     cardNumber: "",
     cvv: "",
     expDate: null,
+    isFilled: false,
   }
   public render() {
-    const { expDate, cvv, cardNumber, cardName } = this.state;
-    console.log({ cardName })
+    const { expDate, cvv, cardNumber, cardName, isFilled } = this.state;
+    if (isFilled) {
+      return <Redirect to='/orders' />
+    }
     return (
       <Form onSubmit={this.onSubmit}>
         <React.Fragment>
@@ -85,7 +94,6 @@ class _PaymentDetails extends React.Component<IPaymentDetailsProps, IPaymentDeta
                 value={expDate}
                 onChange={this.handleChangeDate}
               />
-              {/* <TextField value={expDate} type="date" onChange={this.handleOnChange} required name="expDate" fullWidth autoComplete="cc-exp" /> */}
             </Grid>
             <Grid style={{ marginTop: "15px" }} item xs={12} md={6}>
               <TextField
@@ -133,7 +141,8 @@ class _PaymentDetails extends React.Component<IPaymentDetailsProps, IPaymentDeta
       cardName: "",
       cardNumber: "",
       cvv: "",
-      expDate: null
+      expDate: null,
+      isFilled: true,
     })
   }
 }

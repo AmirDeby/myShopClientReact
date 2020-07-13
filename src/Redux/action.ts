@@ -2,12 +2,39 @@ import axios from 'axios';
 import { Dispatch } from 'react';
 import { IAction, ActionType } from './reducer';
 
+export const getUserOrderItemsAction = (id: number) => {
+    return async (dispatch: Dispatch<IAction>) => {
+        const token = localStorage.getItem('token');
+        const result = await axios.get(`http://localhost:5000/orders/${id}`,
+            { headers: { Authorization: `Bearer ${token}` } });
+        console.log(result.data);
+        dispatch({
+            type: ActionType.GetUserOrders,
+            payload: { userOrders: result.data }
+        })
+    }
+}
+
+export const getOrdersAction = () => {
+    return async (dispatch: Dispatch<IAction>) => {
+        const token = localStorage.getItem('token');
+        const result = await axios.get('http://localhost:5000/orders/me', { headers: { Authorization: `Bearer ${token}` } });
+        dispatch({
+            type: ActionType.GetOrders,
+            payload: { orders: result.data }
+        })
+    }
+}
+
 export const sendCreditCardDetailsAction = (cardName: string, cardNumber: string, cvv: string, expDate: string) => {
     return async (disptach: Dispatch<IAction>) => {
         const token = localStorage.getItem('token')
-        const result = await axios.post('http://localhost:5000/creditcard/', { cardName, cardNumber, cvv, expDate },
+        await axios.post('http://localhost:5000/orders/', { cardName, cardNumber, cvv, expDate },
             { headers: { Authorization: `Bearer ${token}` } });
-        console.log(result);
+        disptach({
+            type: ActionType.SendCreditCardDetails,
+            payload: {}
+        })
     }
 }
 export const searchProductAction = (keyword: string) => {

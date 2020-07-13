@@ -10,6 +10,7 @@ import { PaymentPage } from './Pages/PaymentPage/PaymentPage';
 import { ProductsPage } from './Pages/ProductsPage/ProductsPage';
 import { Register } from './Pages/Register/Register';
 import { IState } from './Redux/reducer';
+import { Orders } from './Pages/Orders/Orders';
 
 export interface IAppProps {
 }
@@ -39,6 +40,10 @@ class _App extends React.Component<IAppProps> {
           <PrivateRoute path="/payment">
             <h1>Payment Page</h1>
             <PaymentPage />
+          </PrivateRoute>
+          <PrivateRoute path="/orders">
+            <h1>Orders Page</h1>
+            <Orders />
           </PrivateRoute>
           <Route>
             page not found
