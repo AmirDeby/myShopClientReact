@@ -3,9 +3,11 @@
 }
 
 body {
-  background-image: url('/42.jpg');
+  background-image: url('/3.jpg');
   background-size: cover;
   background-repeat: no-repeat;
-  background-color: #fff8 !important;
+  background-color: rgba(5, 4, 4, 0.377) !important;
   background-blend-mode: color !important;
 }
+
+/* white rgba(255, 255, 255, 0.568) */

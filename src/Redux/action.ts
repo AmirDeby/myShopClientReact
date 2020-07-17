@@ -2,12 +2,23 @@ import axios from 'axios';
 import { Dispatch } from 'react';
 import { IAction, ActionType } from './reducer';
 
+export const getPDFAction = (id: number) => {
+    return async (dispatch: Dispatch<IAction>) => {
+        const token = localStorage.getItem('token');
+        const result = await axios.get(`http://localhost:5000/orders/${id}/pdf`,
+            { headers: { Authorization: `Bearer ${token}` } });
+        console.log(result);
+        dispatch({
+            type: ActionType.GetPdfFile,
+            payload: {}
+        });
+    }
+}
 export const getUserOrderItemsAction = (id: number) => {
     return async (dispatch: Dispatch<IAction>) => {
         const token = localStorage.getItem('token');
         const result = await axios.get(`http://localhost:5000/orders/${id}`,
             { headers: { Authorization: `Bearer ${token}` } });
-        console.log(result.data);
         dispatch({
             type: ActionType.GetUserOrders,
             payload: { userOrders: result.data }

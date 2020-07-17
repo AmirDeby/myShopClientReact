@@ -12,18 +12,19 @@ import { Link } from 'react-router-dom';
 import { IOrder } from '../../Models/order';
 import { IState } from '../../Redux/reducer';
 import './Order.css';
-import { getUserOrderItemsAction } from '../../Redux/action';
+import { getUserOrderItemsAction, getPDFAction } from '../../Redux/action';
 import { Button } from '@material-ui/core';
 
 export interface IOrderListProps {
     orders: IOrder[],
-    getUserOrdersItems(id: number):void,
+    getUserOrdersItems(id: number): void,
+    getPDF(id: number): void,
 }
 
 
 class _OrderList extends React.Component<IOrderListProps> {
     public render() {
-        const { orders, getUserOrdersItems } = this.props;
+        const { orders, getUserOrdersItems, getPDF } = this.props;
         return (
             <TableContainer className="main-table" component={Paper}>
                 <Table aria-label="caption table">
@@ -43,7 +44,12 @@ class _OrderList extends React.Component<IOrderListProps> {
                                         {moment(date).format('ll')}
                                     </TableCell>
                                     <TableCell component="th" scope="row">
-                                        <Button color="secondary">PDF</Button>
+                                        <Button type="button" onClick={
+                                            (e) => {
+                                                e.preventDefault();
+                                                getPDF(id);
+                                            }}
+                                            color="secondary"><Link to={`/orders/${id}/pdf`}>PDF</Link></Button>
                                     </TableCell>
                                     <TableCell align="right">
                                         <Button onClick={() => getUserOrdersItems(id)}>
@@ -67,6 +73,7 @@ const mapStateToProps = (state: IState) => {
 }
 const mapDispatchToProps = {
     getUserOrdersItems: getUserOrderItemsAction,
+    getPDF: getPDFAction,
 }
 export const OrderList = connect(
     mapStateToProps,

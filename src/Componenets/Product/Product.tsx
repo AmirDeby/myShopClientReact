@@ -34,7 +34,7 @@ const styles = (theme: Theme) => ({
     card: {
         maxWidth: 353,
         margin: theme.spacing(1.5),
-        opacity: 0.95,
+        opacity: 0.75,
     },
     quantity: {
         width: 140,

@@ -8,7 +8,7 @@ export interface IState {
     products: IProduct[],
     userCart: ICartItem[],
     orders: IOrder[],
-    userOrders:[],
+    userOrders: [],
     loader: boolean,
     openModal: boolean,
 }
@@ -29,7 +29,7 @@ const initialState: IState = {
     errorMessage: "",
     products: [],
     userCart: [],
-    userOrders:[],
+    userOrders: [],
     orders: [],
     loader: false,
     openModal: false,
@@ -56,11 +56,17 @@ export enum ActionType {
     SearchItemFail = "SEARCH_ITEM_FAIL",
     LogOff = "LOG_OFF",
     SendCreditCardDetails = "SEND_CREDIT_CARD_DETAILS",
+    GetPdfFile = "GET_PDF_FILE",
 }
 
 export const reducer = (state: IState = initialState, action: IAction): IState => {
     switch (action.type) {
 
+        case ActionType.GetPdfFile: {
+            return {
+                ...state,
+            }
+        }
         case ActionType.GetUserOrders: {
             const { userOrders } = action.payload;
             console.log(userOrders);

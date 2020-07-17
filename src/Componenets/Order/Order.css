@@ -1,9 +1,9 @@
 .main-table {
     margin-bottom: 15px;
     background-color: rgba(255, 255, 255, 0.767) !important;
-    -webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75) !important;
-    -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75) !important;
-    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75) !important;
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(117, 116, 116, 0.75) !important;
+    -moz-box-shadow: 10px 10px 5px 0px rgba(112, 110, 110, 0.75) !important;
+    box-shadow: 10px 10px 5px 0px rgba(136, 135, 135, 0.75) !important;
     border-radius: 9px 9px;
     padding: 15px;
 }

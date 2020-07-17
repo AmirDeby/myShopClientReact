@@ -46,8 +46,12 @@ class _App extends React.Component<IAppProps> {
             <Orders />
           </PrivateRoute>
           <Route>
-            page not found
-        </Route>
+            <div style={{ backgroundColor: "rgba(226, 226, 226, 0.76)" }}>
+              <h1><u><b>---ERROR---</b></u></h1>
+              <img alt="404"
+                src="https://www.artzstudio.com/wp-content/uploads/2020/05/404-error-not-found-page-lost.png" />
+            </div>
+          </Route>
         </Switch>
       </div>
     );

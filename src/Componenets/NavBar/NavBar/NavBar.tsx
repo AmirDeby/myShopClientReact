@@ -18,12 +18,12 @@ class _NavBar extends React.Component<INavBarProps> {
     public render() {
         const { isLogged } = this.props;
         return (
-            <Navbar style={{ backgroundColor: "rgba(191, 178, 162, 0.48)" }}>
-                <Navbar.Brand>WhiskyShop</Navbar.Brand>
+            < Navbar style={{ backgroundColor: "rgba(255, 255, 255, 0.726)" }}>
+                < Navbar.Brand > WhiskyShop</Navbar.Brand >
                 <Nav className="mr-auto">
-                    {isLogged ? null : <Nav.Link as="span"><Link to="/register">Register</Link></Nav.Link>}
-                    {isLogged ? null : <Nav.Link as="span"><Link to="/login">Login</Link></Nav.Link>}
-                    {isLogged ? <Nav.Link as="span"><Link to="/products">Products</Link></Nav.Link> : null}
+                    {isLogged ? null : <Nav.Link as="span"><Link to="/register"><b>Register</b></Link></Nav.Link>}
+                    {isLogged ? null : <Nav.Link as="span"><Link to="/login"><b>Login</b></Link></Nav.Link>}
+                    {isLogged ? <Nav.Link as="span"><Link to="/products"><b>Products</b></Link></Nav.Link> : null}
                 </Nav>
                 <div style={{ margin: "auto" }}>
                     {isLogged ? <Search /> : null}
@@ -31,7 +31,7 @@ class _NavBar extends React.Component<INavBarProps> {
                 {isLogged ? <Nav.Link as="span"><Link to="/orders"><OrdersIcon /></Link></Nav.Link> : null}
                 {isLogged ? <Nav.Link as="span"><Link to="/cart"><CartIcon /></Link></Nav.Link> : null}
                 {isLogged ? < LogOfButton /> : null}
-            </Navbar>
+            </ Navbar>
         );
     }
 }
