@@ -5,9 +5,25 @@ import { IAction, ActionType } from './reducer';
 export const getPDFAction = (id: number) => {
     return async (dispatch: Dispatch<IAction>) => {
         const token = localStorage.getItem('token');
-        const result = await axios.get(`http://localhost:5000/orders/${id}/pdf`,
-            { headers: { Authorization: `Bearer ${token}` } });
-        console.log(result);
+        // const result = await axios.get(`http://localhost:5000/orders/${id}/pdf`,
+        // { headers: { Authorization: `Bearer ${token}`, Accept: '*/*' } });
+        const req = new Request(`http://localhost:5000/orders/${id}/pdf`, {
+            method: 'GET',
+            headers: new Headers({
+                Authorization: `Bearer ${token}`
+            }),
+        });
+        fetch(req).then(response => response.blob())
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `invoice-${id}.pdf`;
+                document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
+                a.click();
+                a.remove();  //afterwards we remove the element again         
+            });
+        // console.log(result);
         dispatch({
             type: ActionType.GetPdfFile,
             payload: {}
