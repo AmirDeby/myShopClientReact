@@ -4,14 +4,14 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
+import { Link } from 'react-router-dom';
 import { registerAction, resetErrorMessageAction } from '../../Redux/action';
 import { IState } from '../../Redux/reducer';
 import '../Register/Register.css';
-import { Link } from 'react-router-dom';
-import Typography from '@material-ui/core/Typography';
 
 export interface IRegisterProps extends StyledComponentProps {
     register(firstName: string, lastName: string, email: string, password: string): void,
@@ -28,8 +28,7 @@ const styles = (theme: Theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
-})
-
+});
 interface IRegisterState {
     firstName: string,
     lastName: string,
@@ -164,7 +163,6 @@ class _Register extends React.Component<IRegisterProps, IRegisterState> {
         const { firstName, lastName, email, password } = this.state;
         const { register } = this.props;
         register(firstName, lastName, email, password);
-
     }
 }
 

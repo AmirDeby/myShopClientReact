@@ -11,10 +11,12 @@ export interface IState {
     userOrders: [],
     loader: boolean,
     openModal: boolean,
+    user: any,
+    navLoader: boolean,
 }
 
 export interface IAction {
-    type: string;
+    type: ActionType;
     payload: Record<string, any>;
 
 }
@@ -33,6 +35,8 @@ const initialState: IState = {
     orders: [],
     loader: false,
     openModal: false,
+    user: {},
+    navLoader: false,
 };
 
 export enum ActionType {
@@ -41,9 +45,11 @@ export enum ActionType {
     OpenModal = "OPEN_MODAL",
     CloseModal = "CLOSE_MODAL",
     RegisterFail = "REGISTER_FAIL",
+    RegisterPending = "LOGIN_PENDING",
     RegisterSuccess = "REGISTER_SUCCESS",
     LoginFail = "LOGIN_FAIL",
     LoginSuccess = "LOGIN_SUCCESS",
+    LoginPending = "LOGIN_PENDING",
     ResetErrorMessage = "RESET_ERROR_MESSAGE",
     GetProducts = "GET_PRODUCTS",
     GetProductsPending = "GET_PRODUCTS_PENDING",
@@ -57,11 +63,32 @@ export enum ActionType {
     LogOff = "LOG_OFF",
     SendCreditCardDetails = "SEND_CREDIT_CARD_DETAILS",
     GetPdfFile = "GET_PDF_FILE",
+    GetUser = "GET_USER",
+    AddProdcut = "ADD_PRODUCT"
 }
 
 export const reducer = (state: IState = initialState, action: IAction): IState => {
     switch (action.type) {
 
+        case ActionType.AddProdcut: {
+            return {
+                ...state,
+            }
+        }
+        case ActionType.LoginPending: {
+            return {
+                ...state,
+                navLoader: true,
+            }
+        }
+        case ActionType.GetUser: {
+            const { user } = action.payload;
+            return {
+                ...state,
+                user,
+                navLoader: false,
+            }
+        }
         case ActionType.GetPdfFile: {
             return {
                 ...state,
@@ -69,7 +96,6 @@ export const reducer = (state: IState = initialState, action: IAction): IState =
         }
         case ActionType.GetUserOrders: {
             const { userOrders } = action.payload;
-            console.log(userOrders);
             return {
                 ...state,
                 userOrders
@@ -111,6 +137,7 @@ export const reducer = (state: IState = initialState, action: IAction): IState =
             return {
                 ...state,
                 isLogged: false,
+                user: {},
             }
         }
         case ActionType.SearchItem: {
@@ -189,16 +216,26 @@ export const reducer = (state: IState = initialState, action: IAction): IState =
                 loader: true
             }
         }
+        case ActionType.RegisterPending: {
+            return {
+                ...state,
+                navLoader: true,
+            }
+        }
         case ActionType.RegisterSuccess: {
             return {
                 ...state,
                 isLogged: true,
+                navLoader: false,
             }
         }
         case ActionType.LoginSuccess: {
+            const { user } = action.payload;
             return {
                 ...state,
                 isLogged: true,
+                user,
+                navLoader: false,
             }
         }
         case ActionType.LoginFail: {
@@ -206,6 +243,7 @@ export const reducer = (state: IState = initialState, action: IAction): IState =
             return {
                 ...state,
                 errorMessage: msg,
+                navLoader: false,
             }
         }
         case ActionType.RegisterFail: {
@@ -213,6 +251,7 @@ export const reducer = (state: IState = initialState, action: IAction): IState =
             return {
                 ...state,
                 errorMessage: msg,
+                navLoader: false,
             }
         }
         case ActionType.ResetErrorMessage: {

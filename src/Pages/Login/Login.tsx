@@ -4,12 +4,12 @@ import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import LinkM from '@material-ui/core/Link';
-import { Link } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
+import { Link } from 'react-router-dom';
 import { loginAction, resetErrorMessageAction } from '../../Redux/action';
 import { IState } from '../../Redux/reducer';
 import '../Login/Login.css';
@@ -46,7 +46,7 @@ class _Login extends React.Component<ILoginProps, ILoginState> {
         password: "",
     }
     componentWillUnmount() {
-        const { resetError } = this.props;
+        const { resetError} = this.props;
         resetError();
     }
     public render() {

@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import React from 'react';
 import { connect } from 'react-redux';
-import { insertItemToCartAction } from '../../Redux/action';
+import { insertItemToCartAction, getUserAction } from '../../Redux/action';
 import { IState } from '../../Redux/reducer';
 import '../Product/Product.css';
 
@@ -34,7 +34,7 @@ const styles = (theme: Theme) => ({
     card: {
         maxWidth: 353,
         margin: theme.spacing(1.5),
-        opacity: 0.75,
+        opacity: 0.88,
     },
     quantity: {
         width: 140,
@@ -46,7 +46,8 @@ const styles = (theme: Theme) => ({
     }
 });
 
-class _Product extends React.Component<IProductsProps> {
+class _Product extends React.Component<IProductsProps, IProductsState> {
+
     state: IProductsState = {
         quantity: 1,
     }
@@ -109,7 +110,7 @@ class _Product extends React.Component<IProductsProps> {
         const { value, name } = e.target;
         this.setState({
             [name]: parseInt(value)
-        })
+        } as any);
     }
 }
 

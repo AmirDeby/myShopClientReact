@@ -2,11 +2,32 @@ import axios from 'axios';
 import { Dispatch } from 'react';
 import { IAction, ActionType } from './reducer';
 
+export const addProdcutAction = (inventory: number, categoryId: number, description: string, image: string, name: string, originalPrice: number, salePrice: number) => {
+    return async (dispatch: Dispatch<IAction>) => {
+        const token = localStorage.getItem('token');
+        const result = await axios.post('',
+            { headers: { Authorization: `Bearer ${token}` } });
+        console.log(inventory, categoryId, description, image, name, originalPrice, salePrice);
+        dispatch({
+            type: ActionType.AddProdcut,
+            payload: {}
+        })
+    }
+}
+export const getUserAction = () => {
+    return async (dispatch: Dispatch<IAction>) => {
+        const token = localStorage.getItem('token');
+        const result = await axios.get('http://localhost:5000/users/me',
+            { headers: { Authorization: `Bearer ${token}` } });
+        dispatch({
+            type: ActionType.LoginSuccess,
+            payload: { user: result.data }
+        })
+    }
+}
 export const getPDFAction = (id: number) => {
     return async (dispatch: Dispatch<IAction>) => {
         const token = localStorage.getItem('token');
-        // const result = await axios.get(`http://localhost:5000/orders/${id}/pdf`,
-        // { headers: { Authorization: `Bearer ${token}`, Accept: '*/*' } });
         const req = new Request(`http://localhost:5000/orders/${id}/pdf`, {
             method: 'GET',
             headers: new Headers({
@@ -146,17 +167,20 @@ export const getProductsAction = () => {
         })
     }
 }
-
 export const loginAction = (email: string, password: string) => {
     return async (dispatch: Dispatch<IAction>) => {
+        dispatch({
+            type: ActionType.LoginPending,
+            payload: {}
+        })
         try {
             const response = await axios.post('http://localhost:5000/users/login',
                 { email, password });
-            const token = response.data.token;
+            const { token, user } = response.data;
             localStorage.setItem('token', token);
             dispatch({
                 type: ActionType.LoginSuccess,
-                payload: token
+                payload: { token, user }
             })
         }
         catch (e) {
