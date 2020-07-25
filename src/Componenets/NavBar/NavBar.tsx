@@ -11,20 +11,21 @@ import OrdersIcon from '../OrdersIcon/OrdersIcon';
 import '../NavBar/NavBar.css';
 import Loader from '../Loader/Loader';
 import { getUserAction } from '../../Redux/action';
+import upperFirst from 'lodash.upperfirst';
 
 export interface INavBarProps {
     isLogged: boolean,
     userDetails: any,
-    isNavLoading: boolean,
     getUser(): void,
 }
 
 class _NavBar extends React.Component<INavBarProps> {
     public render() {
-        const { isLogged, userDetails, isNavLoading } = this.props;
+        const { isLogged, userDetails } = this.props;
         if (!userDetails) {
             return  < Loader />
         }
+        const firstName = upperFirst(userDetails.firstName);
         return (
             < Navbar className="navbar sticky-top">
                 < Navbar.Brand > WhiskyShop</Navbar.Brand >
@@ -37,7 +38,7 @@ class _NavBar extends React.Component<INavBarProps> {
                 <div style={{ margin: "auto" }}>
                     {isLogged ? <Search /> : null}
                 </div>
-                {isLogged ? <span style={{ marginRight: "25px", color: "black", fontSize: "25px" }}><b>{userDetails ? `Hello ${userDetails.firstName}` : ""}</b></span> : null}
+                {isLogged ? <span style={{ marginRight: "25px", color: "black", fontSize: "25px" }}><b>{userDetails ? `Hello ${firstName}` : ""}</b></span> : null}
                 {isLogged ? <Nav.Link as="span"><Link to="/orders"><OrdersIcon /></Link></Nav.Link> : null}
                 {isLogged ? <Nav.Link as="span"><Link to="/cart"><CartIcon /></Link></Nav.Link> : null}
                 {isLogged ? < LogOfButton /> : null}
@@ -47,13 +48,9 @@ class _NavBar extends React.Component<INavBarProps> {
 }
 
 const mapStateToProps = (state: IState) => {
-    // let { firstName, isAdmin } = state.user;
-    // firstName = firstName ? `Hello ${firstName}` : ""
     return {
         userDetails: state.user,
         isLogged: state.isLogged,
-        isNavLoading: state.navLoader
-        // user: state.user,
     }
 }
 const mapDispatchToProps = {

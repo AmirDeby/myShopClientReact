@@ -5,6 +5,8 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { addProdcutAction } from '../../Redux/action';
 import { IState } from '../../Redux/reducer';
+import Icon from '@material-ui/core/Icon';
+
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -17,6 +19,7 @@ const styles = (theme: Theme) =>
     });
 
 export interface IAddProdcutProps extends StyledComponentProps {
+    isAdd: boolean,
     addProduct(inventory: number, category: number, description: string, image: string, name: string, originalPrice: number, salePrice: number): void,
 }
 
@@ -29,20 +32,20 @@ interface IAddProdcutState {
     salePrice: number,
     categoryId: number,
 }
-
 class _AddProdcut extends React.Component<IAddProdcutProps, IAddProdcutState> {
     state: IAddProdcutState = {
         inventory: 1,
         name: "",
         description: "",
         image: "",
-        originalPrice: 1,
-        salePrice: 1,
-        categoryId: 1,
+        originalPrice: 0,
+        salePrice: 0,
+        categoryId: 2,
     }
     public render() {
-        const { classes } = this.props;
+        const { classes, isAdd } = this.props;
         const { inventory, categoryId, description, image, name, originalPrice, salePrice } = this.state;
+        const isFilled = this.canBeSubmit();
         return (
             <form
                 onSubmit={this.onSubmit}
@@ -108,9 +111,20 @@ class _AddProdcut extends React.Component<IAddProdcutProps, IAddProdcutState> {
                         value={categoryId}
                     />
                 </div>
-                <Button type="submit">Add Product</Button>
-            </form>
+                <Button disabled={!isFilled} type="submit"><Icon color="primary">add_circle</Icon>Add Product</Button>
+                <div>
+                    {isAdd ? <span style={{ color: "red" }}>Product has been added</span> : null}
+                </div>
+            </form >
         );
+    }
+    canBeSubmit = () => {
+        const { description, image, name } = this.state;
+        return (
+            description.length > 0 &&
+            image.length > 0 &&
+            name.length > 0
+        )
     }
     handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value, name } = e.target;
@@ -123,11 +137,20 @@ class _AddProdcut extends React.Component<IAddProdcutProps, IAddProdcutState> {
         const { addProduct } = this.props;
         e.preventDefault();
         addProduct(inventory, categoryId, description, image, name, originalPrice, salePrice);
+        this.setState({
+            inventory: 1,
+            name: "",
+            description: "",
+            image: "",
+            originalPrice: 0,
+            salePrice: 0,
+            categoryId: 2,
+        })
     }
 }
 const mapStateToProps = (state: IState) => {
     return {
-
+        isAdd: state.addProductsSuccess,
     }
 }
 const mapDispatchToProps = {

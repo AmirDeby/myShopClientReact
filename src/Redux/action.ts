@@ -5,12 +5,13 @@ import { IAction, ActionType } from './reducer';
 export const addProdcutAction = (inventory: number, categoryId: number, description: string, image: string, name: string, originalPrice: number, salePrice: number) => {
     return async (dispatch: Dispatch<IAction>) => {
         const token = localStorage.getItem('token');
-        const result = await axios.post('',
+        const result = await axios.post('http://localhost:5000/products/add',
+            { inventory, name, description, image, originalPrice, salePrice, categoryId },
             { headers: { Authorization: `Bearer ${token}` } });
-        console.log(inventory, categoryId, description, image, name, originalPrice, salePrice);
+        const { product } = result.data;
         dispatch({
             type: ActionType.AddProdcut,
-            payload: {}
+            payload: product
         })
     }
 }
@@ -44,7 +45,6 @@ export const getPDFAction = (id: number) => {
                 a.click();
                 a.remove();  //afterwards we remove the element again         
             });
-        // console.log(result);
         dispatch({
             type: ActionType.GetPdfFile,
             payload: {}
@@ -195,12 +195,14 @@ export const loginAction = (email: string, password: string) => {
 export const registerAction = (firstName: string, lastName: string, email: string, password: string) => {
     return async (dispatch: Dispatch<IAction>) => {
         try {
-            const { data: { token } } = await axios.post('http://localhost:5000/users/register',
+            const response = await axios.post('http://localhost:5000/users/register',
                 { firstName, lastName, email, password });
-            localStorage.setItem('token', token)
+            const { token, user } = response.data;
+            localStorage.setItem('token', token);
+            console.log(user);
             dispatch({
                 type: ActionType.RegisterSuccess,
-                payload: token
+                payload: { token, user }
             })
         }
         catch (e) {

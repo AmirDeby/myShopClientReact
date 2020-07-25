@@ -23,7 +23,6 @@ class _App extends React.Component<IAppProps> {
   componentDidMount() {
     const { getUser } = this.props;
     const token = localStorage.getItem('token');
-    console.log({ token });
     if (token) {
       getUser();
     }

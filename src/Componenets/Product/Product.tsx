@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import React from 'react';
 import { connect } from 'react-redux';
-import { insertItemToCartAction, getUserAction } from '../../Redux/action';
+import { insertItemToCartAction } from '../../Redux/action';
 import { IState } from '../../Redux/reducer';
 import '../Product/Product.css';
 

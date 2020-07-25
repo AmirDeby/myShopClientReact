@@ -4,6 +4,7 @@ import { IOrder } from "../Models/order";
 
 export interface IState {
     isLogged: boolean,
+    addProductsSuccess:boolean,
     errorMessage: string,
     products: IProduct[],
     userCart: ICartItem[],
@@ -28,6 +29,7 @@ function isLogged(): boolean {
 
 const initialState: IState = {
     isLogged: isLogged(),
+    addProductsSuccess:false,
     errorMessage: "",
     products: [],
     userCart: [],
@@ -73,6 +75,7 @@ export const reducer = (state: IState = initialState, action: IAction): IState =
         case ActionType.AddProdcut: {
             return {
                 ...state,
+                addProductsSuccess: true,
             }
         }
         case ActionType.LoginPending: {
@@ -142,7 +145,6 @@ export const reducer = (state: IState = initialState, action: IAction): IState =
         }
         case ActionType.SearchItem: {
             const { products } = action.payload;
-            console.log(action.payload);
             return {
                 ...state,
                 products,
@@ -223,10 +225,12 @@ export const reducer = (state: IState = initialState, action: IAction): IState =
             }
         }
         case ActionType.RegisterSuccess: {
+            const { user } = action.payload;
             return {
                 ...state,
                 isLogged: true,
                 navLoader: false,
+                user,
             }
         }
         case ActionType.LoginSuccess: {
