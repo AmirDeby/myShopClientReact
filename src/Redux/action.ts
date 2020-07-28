@@ -120,6 +120,18 @@ export const getUserCartAction = () => {
         })
     }
 }
+export const deleteProductAction = (id: number) => {
+    return async (dispatch: Dispatch<IAction>) => {
+        const token = localStorage.getItem('token');
+        const response = await axios.delete(`http://localhost:5000/products/${id}`,
+            { headers: { Authorization: `Bearer ${token}` } });
+        console.log(response);
+        // dispatch({
+        //     type: ActionType.,
+        //     payload:{}
+        // })
+    }
+}
 
 export const deleteItemFromCartAction = (id: number) => {
     return async (dispatch: Dispatch<IAction>) => {

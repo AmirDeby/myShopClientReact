@@ -1,17 +1,20 @@
+import React from 'react';
 import { StyledComponentProps, Theme, withStyles } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Chip from '@material-ui/core/Chip';
+import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-import React from 'react';
+import DeleteForeverSharpIcon from '@material-ui/icons/DeleteForeverSharp';
 import { connect } from 'react-redux';
-import { insertItemToCartAction } from '../../Redux/action';
+import { IUser } from '../../Models/user';
+import { deleteProductAction, insertItemToCartAction } from '../../Redux/action';
 import { IState } from '../../Redux/reducer';
 import '../Product/Product.css';
 
@@ -25,6 +28,8 @@ export interface IProductsProps extends StyledComponentProps {
     salePrice?: number,
     insertItem?(id: number, quantity: number): void,
     insertError: boolean,
+    user: IUser,
+    deleteProduct(id: number): void,
 }
 
 interface IProductsState {
@@ -35,6 +40,7 @@ const styles = (theme: Theme) => ({
         maxWidth: 353,
         margin: theme.spacing(1.5),
         opacity: 0.88,
+        height: 450,
     },
     quantity: {
         width: 140,
@@ -52,7 +58,7 @@ class _Product extends React.Component<IProductsProps, IProductsState> {
         quantity: 1,
     }
     public render() {
-        const { classes, name, description, image, originalPrice, salePrice, insertError } = this.props;
+        const { classes, name, description, image, originalPrice, salePrice, insertError, user } = this.props;
         const { quantity } = this.state;
         return (
             <Card className={classes.card}>
@@ -65,6 +71,24 @@ class _Product extends React.Component<IProductsProps, IProductsState> {
                         image={image}
                         title={name}
                     />
+                        <div>
+                    {user.isAdmin
+                            ?
+                            <Grid
+                                style={{ position: "absolute", top: "15px", right: "11px" }}
+                                onClick={this.ondeleteProduct} item xs={8}>
+                                <DeleteForeverSharpIcon fontSize="large" />
+                            </Grid>
+                        // <Button
+                        //     onClick={this.ondeleteProduct}
+                        //     size="large"
+                        //     style={{ position: "absolute", top: "5px", right: "1px" }}
+                        //     color="default"
+                        //     startIcon={<HighlightOffIcon />}>
+                        //     </Button>
+                        :
+                        null}
+                        </div>
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="h2">
                             {name}
@@ -94,7 +118,7 @@ class _Product extends React.Component<IProductsProps, IProductsState> {
                 <div style={{ marginTop: "8px" }}>
                     <span style={{ color: "red" }} className={["erorr-insert", insertError ? 'visible' : 'invisible'].join(' ')}>*Quantity must be at least 1</span>
                 </div>
-                <IconButton onClick={this.addItemToCart} color="primary" aria-label="add to shopping cart">
+                <IconButton style={{ position: "inherit" }} onClick={this.addItemToCart} color="primary" aria-label="add to shopping cart">
                     <AddShoppingCartIcon />
                 </IconButton>
             </Card>
@@ -112,15 +136,21 @@ class _Product extends React.Component<IProductsProps, IProductsState> {
             [name]: parseInt(value)
         } as any);
     }
+    ondeleteProduct = () => {
+        const { id, deleteProduct } = this.props;
+        deleteProduct(id);
+    }
 }
 
 const mapStateToProps = (state: IState) => {
     return {
         insertError: state.errorMessage !== "",
+        user: state.user,
     }
 }
 const mapDispatchToProps = {
     insertItem: insertItemToCartAction,
+    deleteProduct: deleteProductAction,
 }
 
 export const Product = connect(

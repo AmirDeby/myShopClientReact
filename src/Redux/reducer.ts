@@ -1,10 +1,11 @@
 import { ICartItem } from "../Models/cart";
 import { IProduct } from "../Models/Product";
 import { IOrder } from "../Models/order";
+import { IUser } from "../Models/user";
 
 export interface IState {
     isLogged: boolean,
-    addProductsSuccess:boolean,
+    addProductsSuccess: boolean,
     errorMessage: string,
     products: IProduct[],
     userCart: ICartItem[],
@@ -12,7 +13,7 @@ export interface IState {
     userOrders: [],
     loader: boolean,
     openModal: boolean,
-    user: any,
+    user: IUser,
     navLoader: boolean,
 }
 
@@ -29,7 +30,7 @@ function isLogged(): boolean {
 
 const initialState: IState = {
     isLogged: isLogged(),
-    addProductsSuccess:false,
+    addProductsSuccess: false,
     errorMessage: "",
     products: [],
     userCart: [],
@@ -37,7 +38,7 @@ const initialState: IState = {
     orders: [],
     loader: false,
     openModal: false,
-    user: {},
+    user: { firstName: "", lastName: "", isAdmin: 0 },
     navLoader: false,
 };
 
@@ -140,7 +141,7 @@ export const reducer = (state: IState = initialState, action: IAction): IState =
             return {
                 ...state,
                 isLogged: false,
-                user: {},
+                user: { firstName: "", lastName: "", isAdmin: 0 },
             }
         }
         case ActionType.SearchItem: {
