@@ -71,24 +71,17 @@ class _Product extends React.Component<IProductsProps, IProductsState> {
                         image={image}
                         title={name}
                     />
-                        <div>
-                    {user.isAdmin
+                    <div>
+                        {user.isAdmin
                             ?
                             <Grid
                                 style={{ position: "absolute", top: "15px", right: "11px" }}
                                 onClick={this.ondeleteProduct} item xs={8}>
                                 <DeleteForeverSharpIcon fontSize="large" />
                             </Grid>
-                        // <Button
-                        //     onClick={this.ondeleteProduct}
-                        //     size="large"
-                        //     style={{ position: "absolute", top: "5px", right: "1px" }}
-                        //     color="default"
-                        //     startIcon={<HighlightOffIcon />}>
-                        //     </Button>
-                        :
-                        null}
-                        </div>
+                            :
+                            null}
+                    </div>
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="h2">
                             {name}

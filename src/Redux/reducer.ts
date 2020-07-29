@@ -60,6 +60,7 @@ export enum ActionType {
     InsertItemToCart = "INSERT_ITEM_TO_CART",
     InsertItemError = "INSERT_ITEM_ERROR",
     DeleteItemFromCart = "DELETE_ITEM_FROM_CART",
+    DeleteProduct = "DELETE_PRODUCT",
     SearchItem = "SEARCH_ITEM",
     SearchIteamPending = "SEARCH_ITEM_PENDING",
     SearchItemFail = "SEARCH_ITEM_FAIL",
@@ -67,12 +68,29 @@ export enum ActionType {
     SendCreditCardDetails = "SEND_CREDIT_CARD_DETAILS",
     GetPdfFile = "GET_PDF_FILE",
     GetUser = "GET_USER",
-    AddProdcut = "ADD_PRODUCT"
+    AddProdcut = "ADD_PRODUCT",
+    ResetAddProductMessage = "RESET_ADD_PRODUCT_MESSAGE",
 }
 
 export const reducer = (state: IState = initialState, action: IAction): IState => {
     switch (action.type) {
 
+        case ActionType.ResetAddProductMessage: {
+            return {
+                ...state,
+                addProductsSuccess: false
+            }
+        }
+        case ActionType.DeleteProduct: {
+            const { id } = action.payload;
+            const products = state.products.concat();
+            const productIndex = products.findIndex(product => product.id === id);
+            products.splice(productIndex, 1);
+            return {
+                ...state,
+                products
+            }
+        }
         case ActionType.AddProdcut: {
             return {
                 ...state,

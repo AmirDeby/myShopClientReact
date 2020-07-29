@@ -4,15 +4,20 @@ import { IAction, ActionType } from './reducer';
 
 export const addProdcutAction = (inventory: number, categoryId: number, description: string, image: string, name: string, originalPrice: number, salePrice: number) => {
     return async (dispatch: Dispatch<IAction>) => {
-        const token = localStorage.getItem('token');
-        const result = await axios.post('http://localhost:5000/products/add',
-            { inventory, name, description, image, originalPrice, salePrice, categoryId },
-            { headers: { Authorization: `Bearer ${token}` } });
-        const { product } = result.data;
-        dispatch({
-            type: ActionType.AddProdcut,
-            payload: product
-        })
+        try {
+            const token = localStorage.getItem('token');
+            const result = await axios.post('http://localhost:5000/products/add',
+                { inventory, name, description, image, originalPrice, salePrice, categoryId },
+                { headers: { Authorization: `Bearer ${token}` } });
+            const { product } = result.data;
+            dispatch({
+                type: ActionType.AddProdcut,
+                payload: product
+            })
+        }
+        catch (e) {
+            console.log(e);
+        }
     }
 }
 export const getUserAction = () => {
@@ -62,7 +67,6 @@ export const getUserOrderItemsAction = (id: number) => {
         })
     }
 }
-
 export const getOrdersAction = () => {
     return async (dispatch: Dispatch<IAction>) => {
         const token = localStorage.getItem('token');
@@ -73,7 +77,6 @@ export const getOrdersAction = () => {
         })
     }
 }
-
 export const sendCreditCardDetailsAction = (cardName: string, cardNumber: string, cvv: string, expDate: string) => {
     return async (disptach: Dispatch<IAction>) => {
         const token = localStorage.getItem('token')
@@ -108,7 +111,6 @@ export const searchProductAction = (keyword: string) => {
         }
     }
 }
-
 export const getUserCartAction = () => {
     return async (dispatch: Dispatch<IAction>) => {
         const token = localStorage.getItem('token');
@@ -123,16 +125,14 @@ export const getUserCartAction = () => {
 export const deleteProductAction = (id: number) => {
     return async (dispatch: Dispatch<IAction>) => {
         const token = localStorage.getItem('token');
-        const response = await axios.delete(`http://localhost:5000/products/${id}`,
+        await axios.delete(`http://localhost:5000/products/${id}`,
             { headers: { Authorization: `Bearer ${token}` } });
-        console.log(response);
-        // dispatch({
-        //     type: ActionType.,
-        //     payload:{}
-        // })
+        dispatch({
+            type: ActionType.DeleteProduct,
+            payload: { id }
+        })
     }
 }
-
 export const deleteItemFromCartAction = (id: number) => {
     return async (dispatch: Dispatch<IAction>) => {
         const token = localStorage.getItem('token');
@@ -163,7 +163,6 @@ export const insertItemToCartAction = (id: number, quantity: number) => {
         }
     }
 }
-
 export const getProductsAction = () => {
     return async (dispatch: Dispatch<IAction>) => {
         dispatch({
@@ -203,7 +202,6 @@ export const loginAction = (email: string, password: string) => {
         }
     }
 }
-
 export const registerAction = (firstName: string, lastName: string, email: string, password: string) => {
     return async (dispatch: Dispatch<IAction>) => {
         try {
@@ -250,4 +248,8 @@ export const resetErrorMessageAction = () => {
         payload: {}
     }
 }
-
+export const resetAddProductMessageAction = () => {
+    return {
+        type: ActionType.ResetAddProductMessage
+    }
+}

@@ -3,10 +3,9 @@ import { createStyles, StyledComponentProps, Theme, withStyles } from '@material
 import TextField from '@material-ui/core/TextField';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { addProdcutAction } from '../../Redux/action';
+import { addProdcutAction, resetAddProductMessageAction } from '../../Redux/action';
 import { IState } from '../../Redux/reducer';
 import Icon from '@material-ui/core/Icon';
-
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -20,6 +19,7 @@ const styles = (theme: Theme) =>
 
 export interface IAddProdcutProps extends StyledComponentProps {
     isAdd: boolean,
+    resetAddProductMessage():void,
     addProduct(inventory: number, category: number, description: string, image: string, name: string, originalPrice: number, salePrice: number): void,
 }
 
@@ -33,6 +33,10 @@ interface IAddProdcutState {
     categoryId: number,
 }
 class _AddProdcut extends React.Component<IAddProdcutProps, IAddProdcutState> {
+    componentWillUnmount() {
+        const { resetAddProductMessage } = this.props;
+        resetAddProductMessage();
+    }
     state: IAddProdcutState = {
         inventory: 1,
         name: "",
@@ -113,7 +117,7 @@ class _AddProdcut extends React.Component<IAddProdcutProps, IAddProdcutState> {
                 </div>
                 <Button disabled={!isFilled} type="submit"><Icon color="primary">add_circle</Icon>Add Product</Button>
                 <div>
-                    {isAdd ? <span style={{ color: "red" }}>Product has been added</span> : null}
+                    {isAdd ? <span style={{ color: "green", fontSize: "30px" }}>Product has been added</span> : null}
                 </div>
             </form >
         );
@@ -134,7 +138,7 @@ class _AddProdcut extends React.Component<IAddProdcutProps, IAddProdcutState> {
     }
     onSubmit = (e: React.FormEvent) => {
         const { inventory, categoryId, description, image, name, originalPrice, salePrice } = this.state;
-        const { addProduct } = this.props;
+        const { addProduct, resetAddProductMessage} = this.props;
         e.preventDefault();
         addProduct(inventory, categoryId, description, image, name, originalPrice, salePrice);
         this.setState({
@@ -145,7 +149,10 @@ class _AddProdcut extends React.Component<IAddProdcutProps, IAddProdcutState> {
             originalPrice: 0,
             salePrice: 0,
             categoryId: 2,
-        })
+        });
+        setTimeout(() => {
+            resetAddProductMessage();
+        }, 7000);
     }
 }
 const mapStateToProps = (state: IState) => {
@@ -155,6 +162,7 @@ const mapStateToProps = (state: IState) => {
 }
 const mapDispatchToProps = {
     addProduct: addProdcutAction,
+    resetAddProductMessage: resetAddProductMessageAction,
 }
 export const AddProdcut = connect(
     mapStateToProps,
