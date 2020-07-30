@@ -4,3 +4,13 @@
     margin: "auto";
     border-radius: 5px;
 }
+
+.alert {
+    width: 40%;
+    margin: auto;
+    border-radius: 5px;
+}
+
+.is-add-div {
+    margin-top: 25px;
+}

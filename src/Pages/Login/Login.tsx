@@ -46,7 +46,7 @@ class _Login extends React.Component<ILoginProps, ILoginState> {
         password: "",
     }
     componentWillUnmount() {
-        const { resetError} = this.props;
+        const { resetError } = this.props;
         resetError();
     }
     public render() {
@@ -94,8 +94,7 @@ class _Login extends React.Component<ILoginProps, ILoginState> {
                             variant="contained"
                             color="primary"
                             disabled={!isFilled}
-                            className={classes.submit}
-                        >
+                            className={classes.submit}>
                             Sign In
                           </Button>
                         <Grid container>
