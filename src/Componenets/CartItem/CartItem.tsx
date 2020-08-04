@@ -22,6 +22,7 @@ const styles = (theme: Theme) => ({
     card: {
         maxWidth: 250,
         margin: theme.spacing(1),
+        height: 350,
     },
     quantity: {
         width: 130,

@@ -2,18 +2,18 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router';
 import './App.css';
+import Loader from './Componenets/Loader/Loader';
 import { NavBar } from './Componenets/NavBar/NavBar';
 import { PrivateRoute } from './Componenets/PrivateRoute/PrivateRoute';
 import { ShoppingCart } from './Componenets/ShoppingCart/ShoppingCart';
+import { AddProdcut } from './Pages/AddProduct/AddProduct';
 import { Login } from './Pages/Login/Login';
+import { Orders } from './Pages/Orders/Orders';
 import { PaymentPage } from './Pages/PaymentPage/PaymentPage';
 import { ProductsPage } from './Pages/ProductsPage/ProductsPage';
 import { Register } from './Pages/Register/Register';
-import { IState } from './Redux/reducer';
-import { Orders } from './Pages/Orders/Orders';
 import { getUserAction } from './Redux/action';
-import Loader from './Componenets/Loader/Loader';
-import { AddProdcut } from './Pages/AddProduct/AddProduct';
+import { IState } from './Redux/reducer';
 
 export interface IAppProps {
   getUser(): void,

@@ -37,7 +37,7 @@ interface IProductsState {
 }
 const styles = (theme: Theme) => ({
     card: {
-        maxWidth: 353,
+        width: 353,
         margin: theme.spacing(1.5),
         opacity: 0.88,
         height: 450,

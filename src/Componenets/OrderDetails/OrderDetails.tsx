@@ -15,7 +15,6 @@ class _OrderDetails extends React.Component<IOrderDetailsProps> {
         const { id, getUserOrdersItems } = this.props;
         getUserOrdersItems(id);
     }
-
     public render() {
         const { userOrdersItem } = this.props;
         return (

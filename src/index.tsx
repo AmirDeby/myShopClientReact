@@ -24,15 +24,15 @@ const store = createStore(reducer, composeWithDevTools(
     // other store enhancers if any
 ));
 ReactDOM.render(
-    <BrowserRouter>
-        <Provider store={store}>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <CssBaseline>
-                    <App />
-                </CssBaseline>
-            </MuiPickersUtilsProvider>
-        </Provider>
-    </BrowserRouter>
+        <BrowserRouter>
+            <Provider store={store}>
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <CssBaseline>
+                        <App />
+                    </CssBaseline>
+                </MuiPickersUtilsProvider>
+            </Provider>
+        </BrowserRouter>
     , document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

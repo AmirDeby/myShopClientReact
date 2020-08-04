@@ -35,7 +35,7 @@ class _Search extends React.Component<ISearchProps, ISearchState> {
                     onClick={this.resetSearchOnClick} size="small"
                     variant="contained" color="secondary"
                     startIcon={<DeleteIcon />}>
-                    Reset Search
+                    Reset
                     </Button>
                 <FormControl value={keyword} style={{ width: "500px" }}
                     onChange={this.onChangeSearch} name="keyword" type="text"
