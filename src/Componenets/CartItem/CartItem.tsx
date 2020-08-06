@@ -17,10 +17,9 @@ import { ICartItem } from '../../Models/cart';
 export interface ICartProps extends ICartItem, StyledComponentProps {
     deleteItem(id: number): void,
 }
-
 const styles = (theme: Theme) => ({
     card: {
-        maxWidth: 250,
+        width: 250,
         margin: theme.spacing(1),
         height: 350,
     },

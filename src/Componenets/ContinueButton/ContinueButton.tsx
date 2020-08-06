@@ -4,6 +4,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { IState } from '../../Redux/reducer';
+import '../../Componenets/ContinueButton/ContinueButton.css'
 
 export interface IContinueButtonProps {
 }
@@ -13,6 +14,7 @@ class _ContinueButton extends React.Component<IContinueButtonProps> {
         return (
             <Link to="/payment">
                 <Button
+                    className="block-btn"
                     variant="contained"
                     color="primary"
                     endIcon={<Icon>send</Icon>}

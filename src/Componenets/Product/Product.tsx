@@ -26,6 +26,7 @@ export interface IProductsProps extends StyledComponentProps {
     image?: string,
     originalPrice?: number,
     salePrice?: number,
+    inventory: number,
     insertItem?(id: number, quantity: number): void,
     insertError: boolean,
     user: IUser,
@@ -58,7 +59,7 @@ class _Product extends React.Component<IProductsProps, IProductsState> {
         quantity: 1,
     }
     public render() {
-        const { classes, name, description, image, originalPrice, salePrice, insertError, user } = this.props;
+        const { classes, name, description, image, originalPrice, salePrice, insertError, user, inventory } = this.props;
         const { quantity } = this.state;
         return (
             <Card className={classes.card}>
@@ -89,31 +90,47 @@ class _Product extends React.Component<IProductsProps, IProductsState> {
                         <Typography variant="body2" color="textSecondary" component="p">
                             {description}
                         </Typography>
-                        <span style={{ textDecoration: "line-through" }} >Original Price : €{originalPrice}</span>
-                        <Chip style={{ marginRight: "5px" }} label={`Sale : €${salePrice}`} className={classes.chip} color="secondary" />
+                        {inventory ?
+                            <span style={{ textDecoration: "line-through" }} >Original Price : €{originalPrice}</span>
+                            :
+                            null}
+                        {inventory ?
+                            <Chip style={{ marginRight: "5px" }} label={`Sale : €${salePrice}`} className={classes.chip} color="secondary" />
+                            :
+                            null
+                        }
                     </CardContent>
                 </CardActionArea>
-                <TextField
-                    className={classes.quantity}
-                    name="quantity"
-                    variant="outlined"
-                    label="Enter Quantity"
-                    type="number"
-                    inputProps={{
-                        min: 1,
-                    }}
-                    value={quantity}
-                    onChange={this.onChangeQuantity}
-                    InputProps={{
-                        startAdornment: <InputAdornment position="start">Quantity</InputAdornment>,
-                    }}
-                />
+                {inventory ?
+                    <TextField
+                        className={classes.quantity}
+                        name="quantity"
+                        variant="outlined"
+                        label="Enter Quantity"
+                        type="number"
+                        inputProps={{
+                            min: 1,
+                        }}
+                        value={quantity}
+                        onChange={this.onChangeQuantity}
+                        InputProps={{
+                            startAdornment: <InputAdornment position="start">Quantity</InputAdornment>,
+                        }}
+                    />
+                    :
+                    null
+                }
                 <div style={{ marginTop: "8px" }}>
                     <span style={{ color: "red" }} className={["erorr-insert", insertError ? 'visible' : 'invisible'].join(' ')}>*Quantity must be at least 1</span>
                 </div>
-                <IconButton style={{ position: "inherit" }} onClick={this.addItemToCart} color="primary" aria-label="add to shopping cart">
-                    <AddShoppingCartIcon />
-                </IconButton>
+                {inventory
+                    ?
+                    <IconButton style={{ position: "inherit" }} onClick={this.addItemToCart} color="primary" aria-label="add to shopping cart">
+                        <AddShoppingCartIcon />
+                    </IconButton>
+                    :
+                    <div className="empty-div"><u>NOT AVAILABLE</u><div>This product is currently out of stock</div></div>
+                }
             </Card>
         );
     }

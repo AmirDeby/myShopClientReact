@@ -10,3 +10,9 @@
 .main-pro {
     user-select: none;
 }
+
+.empty-div {
+    font-family: "Lucida Console", Courier, monospace;
+    font-weight: 900;
+    font-size: 15px;
+}

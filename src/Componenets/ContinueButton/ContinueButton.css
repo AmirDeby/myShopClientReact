@@ -1,0 +1,14 @@
+.block-btn {
+    display: block;
+    width: 100%;
+    border: none;
+    color: white;
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.block-btn:hover {
+    color: rgb(207, 31, 31);
+}

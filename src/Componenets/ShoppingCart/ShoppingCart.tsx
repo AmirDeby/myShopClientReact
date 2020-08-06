@@ -6,11 +6,13 @@ import { IState } from '../../Redux/reducer';
 import { CartItem } from '../CartItem/CartItem';
 import { ContinueButton } from '../ContinueButton/ContinueButton';
 import Loader from '../Loader/Loader';
+import Col from 'react-bootstrap/Col';
+import '../../Componenets/ShoppingCart/ShoppingCart.css';
 
 export interface IShoppingCartProps {
     getCart(): void,
     cart: ICartItem[],
-    isLoading:boolean,
+    isLoading: boolean,
 }
 
 class _ShoppingCart extends React.Component<IShoppingCartProps> {
@@ -24,15 +26,15 @@ class _ShoppingCart extends React.Component<IShoppingCartProps> {
             return <Loader />
         }
         return (
-            <div>
+            <div className="container">
                 <div className="row">
                     {cart.map((item) =>
-                        <div key={item.id}>
+                        <Col key={item.id} md={3} xs={12}>
                             <CartItem {...item} />
-                        </div>
+                        </Col>
                     )}
                 </div>
-                <div style={{ marginTop: "10px" }}>
+                <div className="block-btn" style={{ marginTop: "10px" }}>
                     <ContinueButton />
                 </div>
             </div>
@@ -43,7 +45,7 @@ class _ShoppingCart extends React.Component<IShoppingCartProps> {
 const mapStateToProps = (state: IState) => {
     return {
         cart: state.userCart,
-        isLoading:state.loader,
+        isLoading: state.loader,
     }
 }
 const mapDispatchToProps = {
