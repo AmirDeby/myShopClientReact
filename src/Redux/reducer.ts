@@ -2,6 +2,8 @@ import { ICartItem } from "../Models/cart";
 import { IProduct } from "../Models/Product";
 import { IOrder } from "../Models/order";
 import { IUser } from "../Models/user";
+import sortBy from 'lodash.sortby';
+import remove from 'lodash.remove';
 
 export interface IState {
     isLogged: boolean,
@@ -70,11 +72,22 @@ export enum ActionType {
     GetUser = "GET_USER",
     AddProdcut = "ADD_PRODUCT",
     ResetAddProductMessage = "RESET_ADD_PRODUCT_MESSAGE",
+    SortProductsByPrice = "SORT_PRODUCTS_BY_PRICE",
 }
 
 export const reducer = (state: IState = initialState, action: IAction): IState => {
     switch (action.type) {
 
+        case ActionType.SortProductsByPrice: {
+            const { products } = state
+            const sortedProducts = sortBy(products, 'salePrice');
+            const removedOutOfStockProducts = remove(sortedProducts, product => product.inventory > 0);
+            // const removedOutOfStockProducts = sortedProducts.filter(product => product.inventory > 0);
+            return {
+                ...state,
+                products: removedOutOfStockProducts
+            }
+        }
         case ActionType.ResetAddProductMessage: {
             return {
                 ...state,

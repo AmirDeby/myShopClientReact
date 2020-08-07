@@ -223,6 +223,12 @@ export const registerAction = (firstName: string, lastName: string, email: strin
         }
     }
 }
+export const sortProductsByPriceAction = () => {
+    return {
+        type: ActionType.SortProductsByPrice,
+        payload: {}
+    }
+}
 export const logOffAction = () => {
     localStorage.removeItem('token');
     return {

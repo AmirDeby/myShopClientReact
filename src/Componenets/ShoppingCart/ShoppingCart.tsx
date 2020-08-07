@@ -27,15 +27,15 @@ class _ShoppingCart extends React.Component<IShoppingCartProps> {
         }
         return (
             <div className="container">
+                <div className="block-btn" style={{ marginTop: "10px" }}>
+                    <ContinueButton />
+                </div>
                 <div className="row">
                     {cart.map((item) =>
                         <Col key={item.id} md={3} xs={12}>
                             <CartItem {...item} />
                         </Col>
                     )}
-                </div>
-                <div className="block-btn" style={{ marginTop: "10px" }}>
-                    <ContinueButton />
                 </div>
             </div>
         );

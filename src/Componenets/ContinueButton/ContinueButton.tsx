@@ -12,7 +12,7 @@ export interface IContinueButtonProps {
 class _ContinueButton extends React.Component<IContinueButtonProps> {
     public render() {
         return (
-            <Link to="/payment">
+            <Link style={{ textDecoration: "none" }} to="/payment">
                 <Button
                     className="block-btn"
                     variant="contained"
