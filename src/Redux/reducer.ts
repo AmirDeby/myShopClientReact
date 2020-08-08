@@ -81,11 +81,11 @@ export const reducer = (state: IState = initialState, action: IAction): IState =
         case ActionType.SortProductsByPrice: {
             const { products } = state
             const sortedProducts = sortBy(products, 'salePrice');
-            const removedOutOfStockProducts = remove(sortedProducts, product => product.inventory > 0);
-            // const removedOutOfStockProducts = sortedProducts.filter(product => product.inventory > 0);
+            const inStockProducts = remove(sortedProducts, product => product.inventory > 0);
+            // const inStockProducts = sortedProducts.filter(product => product.inventory > 0);
             return {
                 ...state,
-                products: removedOutOfStockProducts
+                products: inStockProducts
             }
         }
         case ActionType.ResetAddProductMessage: {
