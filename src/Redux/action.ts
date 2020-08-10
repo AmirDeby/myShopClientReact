@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Dispatch } from 'react';
-import { IAction, ActionType } from './reducer';
+import { ActionType, IAction } from './reducer';
 
 export const addProdcutAction = (inventory: number, categoryId: number, description: string, image: string, name: string, originalPrice: number, salePrice: number) => {
     return async (dispatch: Dispatch<IAction>) => {
@@ -221,6 +221,12 @@ export const registerAction = (firstName: string, lastName: string, email: strin
                 payload: { msg: e.message }
             })
         }
+    }
+}
+export const sortProductsByPriceHighToLowAction = () => {
+    return {
+        type: ActionType.SortPriceHighToLow,
+        payload: {}
     }
 }
 export const sortProductsByPriceAction = () => {

@@ -1,9 +1,10 @@
-import { ICartItem } from "../Models/cart";
-import { IProduct } from "../Models/Product";
-import { IOrder } from "../Models/order";
-import { IUser } from "../Models/user";
-import sortBy from 'lodash.sortby';
+import orderBy from 'lodash.orderby';
 import remove from 'lodash.remove';
+import sortBy from 'lodash.sortby';
+import { ICartItem } from "../Models/cart";
+import { IOrder } from "../Models/order";
+import { IProduct } from "../Models/Product";
+import { IUser } from "../Models/user";
 
 export interface IState {
     isLogged: boolean,
@@ -73,16 +74,27 @@ export enum ActionType {
     AddProdcut = "ADD_PRODUCT",
     ResetAddProductMessage = "RESET_ADD_PRODUCT_MESSAGE",
     SortProductsByPrice = "SORT_PRODUCTS_BY_PRICE",
+    SortPriceHighToLow = "SORT_PRICE_HIGH_TO_LOW",
 }
 
 export const reducer = (state: IState = initialState, action: IAction): IState => {
     switch (action.type) {
 
+        case ActionType.SortPriceHighToLow: {
+            const { products } = state
+            const sortedProducts = sortBy(products, 'salePrice');
+            const inStockProducts = sortedProducts.filter(product => product.inventory > 0);
+            const sortProductsByPriceHighToLow = orderBy(inStockProducts, ['salePrice'], ['desc']);
+            console.log(sortProductsByPriceHighToLow);
+            return {
+                ...state,
+                products: sortProductsByPriceHighToLow
+            }
+        }
         case ActionType.SortProductsByPrice: {
             const { products } = state
             const sortedProducts = sortBy(products, 'salePrice');
             const inStockProducts = remove(sortedProducts, product => product.inventory > 0);
-            // const inStockProducts = sortedProducts.filter(product => product.inventory > 0);
             return {
                 ...state,
                 products: inStockProducts
@@ -162,7 +174,19 @@ export const reducer = (state: IState = initialState, action: IAction): IState =
             }
         }
         case ActionType.SendCreditCardDetails: {
-
+            // const userCart = state.userCart;
+            // const newProducts = state.products.concat();
+            // userCart.forEach(userProduct => {
+            //     console.log({ userProduct });
+            //     let product = newProducts.find(product => console.log({ product}));
+            // });
+// const itemIndex = newProducts.findIndex(product => product.id === id);
+            // const currentItem = newProducts[itemIndex];
+            // newProducts[itemIndex] = {
+            //     ...currentItem,
+            //     inventory: product.inventory - quantity,
+            // }
+            // console.log(newProducts);
             return {
                 ...state,
                 userCart: [],
@@ -210,13 +234,6 @@ export const reducer = (state: IState = initialState, action: IAction): IState =
             const { id, quantity } = action.payload;
             const newProducts = state.products.concat();
             const product = newProducts.find(product => product.id === id);
-            // const itemIndex = newProducts.findIndex(product => product.id === id);
-            // const currentItem = newProducts[itemIndex];
-            // newProducts[itemIndex] = {
-            //     ...currentItem,
-            //     inventory: product.inventory - quantity,
-            // }
-            // console.log(newProducts);
             const cartItem: ICartItem = {
                 ...product,
                 quantity

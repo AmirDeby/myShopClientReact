@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Loader from '../../Componenets/Loader/Loader';
 import { Product } from '../../Componenets/Product/Product';
 import { IProduct } from '../../Models/Product';
-import { getProductsAction, getUserCartAction, sortProductsByPriceAction } from '../../Redux/action';
+import { getProductsAction, getUserCartAction, sortProductsByPriceAction, sortProductsByPriceHighToLowAction } from '../../Redux/action';
 import { IState } from '../../Redux/reducer';
 import SortIcon from '@material-ui/icons/Sort';
 import IconButton from '@material-ui/core/IconButton';
@@ -14,6 +14,7 @@ export interface IProductsPageProps {
     getUserCart(): void,
     isLoading: boolean,
     sortProductsByPrice(): void,
+    sortProductsHighToLow(): void,
 }
 
 class _ProductsPage extends React.Component<IProductsPageProps> {
@@ -29,12 +30,24 @@ class _ProductsPage extends React.Component<IProductsPageProps> {
         }
         return (
             <div>
-                <IconButton
-                    style={{ backgroundColor: "white", borderRadius: "7px", padding: "10px", margin: "15px", float:"left" }}
-                    color="secondary"
-                    onClick={this.handleOnSort}>
-                    Sort By Price<SortIcon />
-                </IconButton>
+                <div>
+                    <IconButton
+                        size="small"
+                        style={{ backgroundColor: "white", borderRadius: "7px", padding: "10px", margin: "15px", float: "left" }}
+                        color="secondary"
+                        onClick={this.handleOnSortLow}>
+                        Low Price<SortIcon />
+                    </IconButton>
+                </div>
+                <div style={{ position: "absolute", top: "140px" }}>
+                    <IconButton
+                        size="small"
+                        style={{ backgroundColor: "white", borderRadius: "7px", padding: "10px", margin: "15px", float: "left" }}
+                        color="secondary"
+                        onClick={this.handleOnSortHigh}>
+                        High Price<SortIcon />
+                    </IconButton>
+                </div>
                 <div className="row">
                     {products.map((product) =>
                         <div key={product.id}>
@@ -45,9 +58,13 @@ class _ProductsPage extends React.Component<IProductsPageProps> {
             </div>
         );
     }
-    handleOnSort = () => {
+    handleOnSortLow = () => {
         const { sortProductsByPrice } = this.props;
         sortProductsByPrice();
+    }
+    handleOnSortHigh = () => {
+        const { sortProductsHighToLow } = this.props;
+        sortProductsHighToLow();
     }
 }
 
@@ -61,6 +78,7 @@ const mapDispatchToProps = {
     getProducts: getProductsAction,
     getUserCart: getUserCartAction,
     sortProductsByPrice: sortProductsByPriceAction,
+    sortProductsHighToLow: sortProductsByPriceHighToLowAction,
 }
 export const ProductsPage = connect(
     mapStateToProps,
