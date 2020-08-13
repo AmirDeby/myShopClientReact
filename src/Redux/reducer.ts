@@ -174,22 +174,20 @@ export const reducer = (state: IState = initialState, action: IAction): IState =
             }
         }
         case ActionType.SendCreditCardDetails: {
-            // const userCart = state.userCart;
-            // const newProducts = state.products.concat();
-            // userCart.forEach(userProduct => {
-            //     console.log({ userProduct });
-            //     let product = newProducts.find(product => console.log({ product}));
-            // });
-// const itemIndex = newProducts.findIndex(product => product.id === id);
-            // const currentItem = newProducts[itemIndex];
-            // newProducts[itemIndex] = {
-            //     ...currentItem,
-            //     inventory: product.inventory - quantity,
-            // }
-            // console.log(newProducts);
+            const userCart = state.userCart;
+            const newProducts = state.products.concat();
+            userCart.forEach(userProduct => {
+                let productIndex = newProducts.findIndex(product => product.id === userProduct.productId);
+                const currentProduct = newProducts[productIndex]
+                newProducts[productIndex] = {
+                    ...currentProduct,
+                    inventory: currentProduct.inventory - userProduct.quantity
+                }
+            });
             return {
                 ...state,
                 userCart: [],
+                products: newProducts
             }
         }
         case ActionType.LogOff: {
@@ -243,7 +241,6 @@ export const reducer = (state: IState = initialState, action: IAction): IState =
                 ...state,
                 errorMessage: "",
                 userCart: newUserCart,
-                // products: newProducts
             }
         }
         case ActionType.InsertItemError: {
